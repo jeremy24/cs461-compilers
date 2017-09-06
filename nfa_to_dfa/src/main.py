@@ -94,11 +94,28 @@ def get_accessable(nfa, state, only_do_tran=None):
     states = nfa.state_map
     epi = "E"
 
-    can_access = list()
-    
-    # if it has a episilion trans then it can stay at itself
-    if len(states[state][epi]) > 0:
-        can_access.append(state)
+    print("\nState: {} Trans: {}".format(state, only_do_tran))
+
+    # print("\nGetting {} for state {}".format(only_do_tran, state))
+    can_access = list()    
+
+    # can_do_epi = len(can_access) == 0
+    can_do_epi = True
+
+    # if state has a transition for only_do_tran then we
+    # cannot follow any epsilion transitions for state
+    if only_do_tran is not None:
+        if len(states[state][only_do_tran]) > 0:
+            # if we have the desired trans we cannot take the epi first
+            can_do_epi = False
+        else:
+            # if it has a episilion trans then it can stay at itself
+            if len(states[state][epi]) > 0:
+                can_access.append(state)
+            
+
+    # loop thru all possible transition states
+    is_first = True
     for tran in trans:
         if only_do_tran is not None:
             if tran != only_do_tran:
@@ -109,6 +126,9 @@ def get_accessable(nfa, state, only_do_tran=None):
             can_access.append(item)
         i = 0
 
+    
+        print("Can do epsilion: ", can_do_epi)
+        print("Can access: {}".format(can_access))
         # this list will be reset for EACH possible transition
         # type since each one needs to be searched
         has_visited = list()
@@ -117,16 +137,23 @@ def get_accessable(nfa, state, only_do_tran=None):
                 item = str(item)
                 try:
                     if len(states[item][epi]) == 0:
-                        pass
-                    elif item not in has_visited:
+                        # print("{} has no epis, skipping".format(state))
+                        # i += 1
+                        continue
+                    if item not in has_visited:
                         has_visited.append(item)
-                        for epi_tran in states[item][epi]:
-                            can_access.append(epi_tran)
+                        for epi_state in states[item][epi]:
+                            if can_do_epi == False:
+                                if int(item) == int(state):
+                                    print("Skipping {} cant to epis".format(item))
+                                    break
+                            print("Checking state {} for epis".format(epi_state))
+                            can_access.append(epi_state)
                 except KeyError as ex:
                     print("KeyError: ", ex)
                     exit(1)
-                
             i += 1
+        is_first = False
     return list(set(can_access))
 
 def make_dfa_states(nfa):
@@ -138,28 +165,71 @@ def make_dfa_states(nfa):
     
     print("Start State:", start)
     print("Transitions:", trans)
-    
 
     keys = list(states.keys())
 
 
     keys.sort(key=lambda x: int(x))
-    # print(keys)
+    print("Keys:")
+    print(keys)
 
     new_states = list()
 
+
+    ## debugging
+    # l = list()
+    # a = get_accessable(nfa, "3", "c")
+
+    # print(a)
+    # print("\n\n\n")
+    # return
+
+    print("\n")
     for state in keys:
-        can_access = get_accessable(nfa, state)
-        can_access = map(int, can_access)
-        can_access.sort()
-        can_access = filter(lambda x: x!="", can_access)
-        if len(can_access) == 0:
-            continue
-        # print("Adding: ", can_access)
-        new_states.append(",".join(map(str,can_access)))
+        print("State:", state)
+
+        # if state != 3:
+        #     break
+
+        for tran in nfa.transitions:
+            if tran == epi:
+                continue
+            can_access = get_accessable(nfa, state, tran)
+            can_access = map(int, can_access)
+            can_access = list(set(can_access))
+            can_access.sort()
+
+            print("state: {} can access:".format(tran), can_access)
+            # can_access = filter(lambda x: x!="", can_access)
+            
+            if len(can_access) == 0:
+                continue
+            # print("Adding: ", can_access)
+            new_states.append(",".join(map(str,can_access)))
+
+    
+
     new_states = list(set(new_states))
     new_states = map(lambda x: x.split(","), new_states)
+
+    see_start = False
+    see_end = [False for _ in nfa.finals]        
+    for states in new_states:
+        if str(nfa.initial) in states:
+            see_start = True
+        for i in range(len(nfa.finals)):
+            x = nfa.finals[i]
+            if str(x) in states:
+                see_end[i] = True
+
+    if not see_start:
+        print("Don't see initial state, adding in")
+        new_states.append([str(nfa.initial)])
+
+    new_states.sort()
+
     hashable = map(lambda x: ",".join(x), new_states)
+    
     new_states = zip(range(len(new_states)), hashable, new_states)
 
     table = dict()
@@ -174,19 +244,39 @@ def make_dfa_states(nfa):
 
 def main():
     nfa = get_nfa()
+
+    for key in nfa.state_map:
+        print("key: {}   {}".format(key, nfa.state_map[key]))
+
     print()
     dfa_states, dfa_table = make_dfa_states(nfa)
     
-    print("New DFA States")
+    print("\nNew DFA States")
     for state in dfa_states:
         print(state)
 
+    print("\nDFA Table")
+    for key in dfa_table:
+        print(key, dfa_table[key])
+    
     tmp = dfa_states[0]
     print("Tmp state: ", tmp)
 
     can_see = list()
     on_state = list()
+
     
+
+    for (index, hashable, l) in dfa_states:
+        print("New DFA state:  {}   -->   {}".format(index, "{" + hashable + "}"))
+
+
+
+
+
+    exit(1)
+
+
     for trans in nfa.transitions:
         if trans == "E":
             continue
