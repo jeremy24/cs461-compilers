@@ -9,8 +9,8 @@ import fileinput
 
 class Nfa:
     def __init__(self, initial, finals, total, transitions, state_map):
-        self.initial = str(initial)
-        self.finals = map(str, finals)
+        self.initial = int(initial)
+        self.finals = map(int, finals)
         self.states = range(total)
         self.total = total
         self.transitions = transitions
@@ -160,54 +160,6 @@ def get_accessable(nfa, state, only_do_tran=None):
         is_first = False
     return list(set(can_access))
 
-def e_closure(nfa, state):
-    can_access = list()
-    has_visited = list()
-    epi = "E"
-    i = 0
-
-    states = list()
-
-    if type(state) != list:
-        states = [state]
-    else:
-        states = state
-
-    ret = list()
-    for x in states:
-        ret.append(x)
-        can_access.append(x)
-    
-    while len(can_access) > 0:
-        item = str(can_access.pop())
-        if item not in has_visited:
-            print("doing item:", item)
-            for epi_state in nfa.state_map[item][epi]:
-                can_access.append(epi_state)
-                ret.append(epi_state)
-                has_visited.append(item)
-        
-    return map(str, list(set(ret)))
-
-
-def move(nfa, states, transition):
-    res = list()
-
-    for state in states:
-        res = res + move_one(nfa, state, transition) 
-    return res
-
-def move_one(nfa, state, transition):
-    can_access = list()
-    epi = "E"
-
-    for item in nfa.state_map[state][transition]:
-        can_access.append(item)
-    return list(set(can_access))
-
-
-
-
 def make_dfa_states(nfa):
     start = nfa.initial
     trans = nfa.transitions
@@ -291,91 +243,62 @@ def make_dfa_states(nfa):
     return new_states, table
 
 
-def do_work(nfa, state):
-    epi = "E"
-    results = list()
-    for trans in nfa.transitions:
-        if trans == epi:
-            continue
-        res = move(nfa, state, trans)
-        # print("Move from {} on {} is {}".format(state, trans, res))
-        res = map(lambda x: e_closure(nfa, x), res)
-        # print("e closed move: {}", res)
-        results.append((trans, res))
 
-    # results = map(lambda (t,l): (t, l) if (len(t) > 0 and type(t[0] != list)) else (t[0],l), results)
 
-    return results
 
 def main():
     nfa = get_nfa()
-    epi = "E"
+
+    for key in nfa.state_map:
+        print("key: {}   {}".format(key, nfa.state_map[key]))
+
+    print()
+    dfa_states, dfa_table = make_dfa_states(nfa)
     
-    # the new states
-    states = list()
+    print("\nNew DFA States")
+    for state in dfa_states:
+        print(state)
 
-    # for the search
-    to_do = list()
-    have_seen = list()
+    print("\nDFA Table")
+    for key in dfa_table:
+        print(key, dfa_table[key])
+    
+    tmp = dfa_states[0]
+    print("Tmp state: ", tmp)
 
-    start = e_closure(nfa, nfa.initial)
-    print("Start: ", start)
-    current = start
+    can_see = list()
+    on_state = list()
 
-    results = list()
-    results.append(start)
+    
 
-    hashable = ",".join(start)
-    to_do.append(start)
+    for (index, hashable, l) in dfa_states:
+        print("New DFA state:  {}   -->   {}".format(index, "{" + hashable + "}"))
 
-    new_map = dict()
 
-    while len(to_do) > 0:
-        item = to_do.pop()
-        hashable = ",".join(item)
-        if hashable in have_seen:
+
+
+
+    exit(1)
+
+
+    for trans in nfa.transitions:
+        if trans == "E":
             continue
-        print("doing: ", hashable)
-        have_seen.append(hashable)     
-        res = do_work(nfa, item)
-        print("RES: {}".format(res))
-        reachable = []
-        results.append((item, res))
-        for (trans, l) in res:
-            for x in l:
-                to_do.append(x)
- 
-    print("\n\n\n")
-    for x in results:
-        print(x)
+        gettable = list()
+        for can_get in tmp[2]:
+            local_gettable = get_accessable(nfa, can_get, trans)
+            for item in local_gettable:
+                item = int(item)
+                if item not in gettable:
+                    gettable.append(item)
+                gettable.sort()
+        gettable = map(str, gettable)
+        key = ",".join(gettable)
+        new_state = dfa_table[key]
+        print("Can access dfa state {} via trans {}".format(new_state, trans))
 
-# def main():
-#     nfa = get_nfa()
-
-#     for key in nfa.state_map:
-#         print("key: {}   {}".format(key, nfa.state_map[key]))
-
-#     print()
-#     dfa_states, dfa_table = make_dfa_states(nfa)
-    
-#     print("\nNew DFA States")
-#     for state in dfa_states:
-#         print(state)
-
-#     print("\nDFA Table")
-#     for key in dfa_table:
-#         print(key, dfa_table[key])
-    
-#     tmp = dfa_states[0]
-#     print("Tmp state: ", tmp)
-
-#     can_see = list()
-#     on_state = list()
-
-    
-
-#     for (index, hashable, l) in dfa_states:
-#         print("New DFA state:  {}   -->   {}".format(index, "{" + hashable + "}"))
+            
+        print("Can see {} from state {}".format(gettable, trans))
 
 
 
