@@ -160,7 +160,7 @@ def get_accessable(nfa, state, only_do_tran=None):
         is_first = False
     return list(set(can_access))
 
-def e_closure(nfa, state):
+def e_closure(nfa, state, force=False):
     can_access = list()
     has_visited = list()
     epi = "E"
@@ -172,16 +172,21 @@ def e_closure(nfa, state):
         states = [state]
     else:
         states = state
-
+    
+    is_valid = False
     ret = list()
     for x in states:
+        if len(nfa.state_map[str(x)][epi]) > 0:
+            is_valid = True
         ret.append(x)
         can_access.append(x)
-    
+
+    # if not is_valid and not force:
+    #     return list()
+
     while len(can_access) > 0:
         item = str(can_access.pop())
         if item not in has_visited:
-            print("doing item:", item)
             for epi_state in nfa.state_map[item][epi]:
                 can_access.append(epi_state)
                 ret.append(epi_state)
@@ -195,7 +200,7 @@ def move(nfa, states, transition):
 
     for state in states:
         res = res + move_one(nfa, state, transition) 
-    return res
+    return list(set(res))
 
 def move_one(nfa, state, transition):
     can_access = list()
@@ -206,100 +211,19 @@ def move_one(nfa, state, transition):
     return list(set(can_access))
 
 
-
-
-def make_dfa_states(nfa):
-    start = nfa.initial
-    trans = nfa.transitions
-    states = nfa.state_map
-
-    epi = "E"
-    
-    print("Start State:", start)
-    print("Transitions:", trans)
-
-    keys = list(states.keys())
-
-
-    keys.sort(key=lambda x: int(x))
-    print("Keys:")
-    print(keys)
-
-    new_states = list()
-
-
-    ## debugging
-    # l = list()
-    # a = get_accessable(nfa, "3", "c")
-
-    # print(a)
-    # print("\n\n\n")
-    # return
-
-    print("\n")
-    for state in keys:
-        print("State:", state)
-
-        # if state != 3:
-        #     break
-
-        for tran in nfa.transitions:
-            if tran == epi:
-                continue
-            can_access = get_accessable(nfa, state, tran)
-            can_access = map(int, can_access)
-            can_access = list(set(can_access))
-            can_access.sort()
-
-            print("state: {} can access:".format(tran), can_access)
-            # can_access = filter(lambda x: x!="", can_access)
-            
-            if len(can_access) == 0:
-                continue
-            # print("Adding: ", can_access)
-            new_states.append(",".join(map(str,can_access)))
-
-    
-
-    new_states = list(set(new_states))
-    new_states = map(lambda x: x.split(","), new_states)
-
-    see_start = False
-    see_end = [False for _ in nfa.finals]        
-    for states in new_states:
-        if str(nfa.initial) in states:
-            see_start = True
-        for i in range(len(nfa.finals)):
-            x = nfa.finals[i]
-            if str(x) in states:
-                see_end[i] = True
-
-    if not see_start:
-        print("Don't see initial state, adding in")
-        new_states.append([str(nfa.initial)])
-
-    new_states.sort()
-
-    hashable = map(lambda x: ",".join(x), new_states)
-    
-    new_states = zip(range(len(new_states)), hashable, new_states)
-
-    table = dict()
-    for (state, hashable, l) in new_states:
-        table[hashable] = state
-
-    return new_states, table
-
-
 def do_work(nfa, state):
     epi = "E"
     results = list()
     for trans in nfa.transitions:
         if trans == epi:
             continue
-        res = move(nfa, state, trans)
+        mv = move(nfa, state, trans)
+        res = list()
+        for x in mv:
+            clos = e_closure(nfa, x)
+            res.append(clos)
         # print("Move from {} on {} is {}".format(state, trans, res))
-        res = map(lambda x: e_closure(nfa, x), res)
+        # res = map(lambda x: e_closure(nfa, x), mv)
         # print("e closed move: {}", res)
         results.append((trans, res))
 
@@ -309,6 +233,7 @@ def do_work(nfa, state):
 
 def main():
     nfa = get_nfa()
+    print("reading NFA ... done.\n\n\n")
     epi = "E"
     
     # the new states
@@ -318,36 +243,164 @@ def main():
     to_do = list()
     have_seen = list()
 
-    start = e_closure(nfa, nfa.initial)
-    print("Start: ", start)
+    start = e_closure(nfa, nfa.initial, force=True)
     current = start
 
-    results = list()
-    results.append(start)
+    start = map(int, start)
+    start.sort()
+    start = map(str, start)
 
+    results = list()
     hashable = ",".join(start)
     to_do.append(start)
 
     new_map = dict()
+
+    # print("Start")
+    # print(start)
+    # exit(1)
+
+    print("creating corresponding DFA ...")
 
     while len(to_do) > 0:
         item = to_do.pop()
         hashable = ",".join(item)
         if hashable in have_seen:
             continue
-        print("doing: ", hashable)
+        # print("doing: ", hashable)
         have_seen.append(hashable)     
         res = do_work(nfa, item)
-        print("RES: {}".format(res))
+        # print("RES: {}".format(res))
         reachable = []
-        results.append((item, res))
+        results.append([item, res])
         for (trans, l) in res:
             for x in l:
                 to_do.append(x)
- 
-    print("\n\n\n")
-    for x in results:
-        print(x)
+
+    row = results[0]
+    print(type(row))
+    print(type(row[0]))
+    print("row[0]")
+    print(row[0])
+    
+    for tran in row[1]:
+        print("\n",tran)
+
+    exit(1)
+
+    for row in results:
+        for x in row:
+            if len(x) < 10:
+                print("\n\nthing:", x)
+
+        print("\n")
+    exit(1)
+
+    reindex = dict()
+    rerev = dict()
+
+    results.sort(key = lambda l: l[0])
+    
+    for l in results:
+        l[0] = map(int, l[0])
+        l[0].sort()
+        l[0] = map(str, l[0])
+
+
+    for i in range(len(results)):
+        # item = results.pop()
+        # print("item: ", )
+        results[i][0] = map(str, results[i][0] )
+        old = ",".join(results[i][0])
+        new = i + 1
+        reindex[new] = old
+        rerev[old] = new
+        results[i][0] = new
+    
+    for key in reindex:
+        print("new DFA state:   {}   -->  {}".format(
+            key, "{" + reindex[key] + "}"
+        ))
+    print("done.\n")
+
+    finals = list()
+    for res in results:
+        state = res[0]
+        for (trans, states) in res[1]:
+            # print("states:", states)
+            j = 0
+            for big_state in states:
+                for final in nfa.finals:
+                    if final in big_state:
+                        # print("state: ", state)
+                        try:
+                            state = map(int, big_state)
+                        except Exception as ex:
+                            print(ex)
+                            # print("States: ", states)
+                            # print("state: ", type(state), state)
+                            # print(j)
+                            # print(type(states[j]), states[j])
+                            print("FAILURE")
+                            exit(1)
+                        state.sort()
+                        state = map(str, state)
+                        state = ",".join(state)
+                        finals.append(state)
+                j += 1
+    finals = list(set(finals))
+    finals.sort()
+    # finals = map(lambda k: (rerev[k], k), finals)
+    finals = map(lambda k: int(rerev[k]), finals)
+
+    start = ",".join(start)
+    start = (rerev[start], start)
+
+    finals = map(str, finals)
+
+    print("final DFA:")
+    print("Initial State:  {}".format(start[0]))
+    print("Final States:  {}".format("{"+",".join(finals)+"}" ))
+    print("Total States:  {}".format(len(rerev.keys())))
+
+    reresults = list()
+
+    for item in results:
+        id = item[0]
+        states = item[1]
+        restates = list()
+        for (trans, l) in states:
+            ll = []
+            for chunk in l:
+                chunk = map(int, chunk)
+                chunk.sort()
+                chunk = map(str, chunk)
+                key = ",".join(chunk)
+                ll.append(rerev[key])
+            restates.append((id, trans, ll))
+        reresults.append(restates)
+    
+    # exit(1)
+    header = map(lambda x: x[1], reresults[0])
+    
+    string = "{:<8}".format("State")
+    for state in header:
+        string += "{:<8}".format(state)
+    print(string)
+
+    for row in reresults:
+        state = row[0][0]
+        string = "{:<8}".format(state) 
+        print("\n")
+        for x in row:
+            print(x)
+        for chunk in row:
+            chunk = map(str, chunk[2])
+            string += "{:<8}".format("{"+"".join(chunk)+"}")
+
+        # print(string)
+
+
 
 # def main():
 #     nfa = get_nfa()
