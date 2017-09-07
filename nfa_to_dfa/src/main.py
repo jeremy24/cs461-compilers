@@ -21,7 +21,7 @@ class Nfa:
         assert int(total) == len(self.state_map) == len(self.states)
 
         # make sure every state has options for all transitions
-        # no transition ir repped as an empty list []
+        # if state S has not transition on A then it is represented as an empty list
         for key in self.state_map:
             assert len(self.state_map[key]) == len(self.transitions), "{} is missing a transition".format(key)
 
@@ -43,14 +43,10 @@ class Nfa:
             for trans in self.transitions:
                 print("\t{} => {}".format(trans, self.state_map[key][trans]))
 
-    def __str__(self):
-        return "NFA:\nInitial: {}  Final: {}  total: {}".format(
-            self.initial, self.finals, len(self.states)
-        )
 
-# parse in an nfa from STDIN
+# parse in an nfa from stdin
 # lots of random map and filter calls since
-# thats the slow but easy way to do it
+# that's the slow but easy way to do it
 def get_nfa():
     print("Starting NFA input parse...")
     lines = list()
@@ -110,7 +106,6 @@ def e_closure(nfa, states):
 
 def e_closure_one(nfa, state):
     epi = "E"
-    global e_closure_cache
 
     # see it with the given states
     ret = set()
@@ -121,7 +116,6 @@ def e_closure_one(nfa, state):
 
     while len(todo) > 0:
         state = str(todo.pop(0))
-        # hasbable = hashable_list(state)
         if state in have_seen:
             continue
         have_seen.append(state)
@@ -185,7 +179,10 @@ def do_sort(states):
 def get_start(nfa):
     return do_sort(e_closure(nfa, [nfa.initial]))
 
-
+# sort a list and then return a comma joined list
+# this is because python is too stupid to hash its own lists
+# so we use this like a "fingerprint" for a list to use them in sets
+# becasue frozensets are stupid
 def hashable_list(l):
     return ",".join(do_sort(l))
 
