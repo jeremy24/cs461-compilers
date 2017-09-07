@@ -14,7 +14,6 @@ class Nfa:
         self.transitions = transitions
         self.state_map = state_map
 
-
         # make sure initial state is valid
         assert self.initial in self.state_map.keys()
 
@@ -36,8 +35,13 @@ class Nfa:
         print("\tFinals: {}".format(self.finals))
         print("\tTotal: {}".format(self.total))
         print("\tTransitions: {}".format(self.transitions))
-        print("\tState keys: {}".format(self.state_map.keys()))
+        print("\tState keys: {}".format(  sorted(map(int, self.state_map.keys())) ))
         print("\tStates: {}".format(self.states))
+        for key in map(str, sorted(map(int, self.state_map.keys()))):
+            print("\nState: {}".format(key))
+            for trans in self.transitions:
+                print("\t{} => {}".format(trans, self.state_map[key][trans]))
+
     def __str__(self):
         return "NFA:\nInitial: {}  Final: {}  total: {}".format(
             self.initial, self.finals, len(self.states)
@@ -106,25 +110,56 @@ def e_closure(nfa, states):
     return list(set(results))
 
 
-e_closure_cache = dict()
+
+# def e_closure(nfa, states):
+# WORKING
+#     assert type(states) == list, "States passed to e_closure must be a list"
+#
+#     epi = "E"
+#
+#     stack = list()
+#     result = set()
+#
+#     for state in states:
+#         stack.append(state)
+#         result.add(state)
+#
+#     while len(stack) > 0:
+#         state = str(stack.pop())
+#         for epi_state in nfa.state_map[state][epi]:
+#             epi_state = str(epi_state)
+#             if epi_state not in result:
+#                 result.add(epi_state)
+#                 stack.append(epi_state)
+#     return result
+
+
+# def e_closure_one(nfa, state):
+#     epi = "E"
+#
+#     stack = list()
+#     result = list()
+#     seen = list()
+
 
 def e_closure_one(nfa, state):
     epi = "E"
     global e_closure_cache
 
-    if str(state) in e_closure_cache.keys():
-        # print("Cached")
-        return e_closure_cache[str(state)]
+    # if hashable(state) in e_closure_cache.keys():
+    #     # print("Cached")
+    #     return e_closure_cache[str(state)]
 
     # see it with the given states
-    ret = set([state])
+    ret = set()
+    ret.add(state)
 
     todo = [state]
     have_seen = list()
 
     while len(todo) > 0:
-        state = str(todo.pop())
-
+        state = str(todo.pop(0))
+        # hasbable = hashable_list(state)
         if state in have_seen:
             continue
         have_seen.append(state)
@@ -133,7 +168,7 @@ def e_closure_one(nfa, state):
             ret.add(reachable_state)
 
     val = map(str, list(set(ret)))
-    e_closure_cache[str(state)] = val
+    # e_closure_cache[str(state)] = val
 
     return val
 
@@ -162,33 +197,23 @@ def move(nfa, states, transition):
     return list(res)
 
 
-
 def do_work_trans(nfa, state, transition):
-    print()
     mv = move(nfa, state, transition)
     e_clos = e_closure(nfa, mv)
 
-    mv = map(str, mv)
-    e_clos = map(str, e_clos)
 
-    res = set(mv).union(set(e_clos))
-
-    # print("\nState {} trans: {}".format(state, transition))
-    # print("eclos: ", e_clos)
-    # print("move: ", mv)
-    # print("Result: ", res)
+    res = map(str, e_clos)
+    res = set(res)
 
     return list(res)
+
 
 def do_work(nfa, state):
     epi = "E"
     results = list()
 
-    print("\tIn do work with: {}".format(state))
-
     if type(state) != list:
         state = [state]
-
 
     for transition in nfa.transitions:
         if transition == epi:
@@ -200,31 +225,54 @@ def do_work(nfa, state):
     return results
 
 
-
 def do_sort(states):
     states = map(int, states)
     states.sort()
     return map(str, states)
 
+
 def get_start(nfa):
     start = e_closure(nfa, [nfa.initial])
     return do_sort(start)
 
+
 def hashable_list(l):
     l = do_sort(l)
     return ",".join(l)
+
+
+def get_correct_for_three():
+    ret = set()
+    ret.add("1,3,4,5,6,8,9,10,11,13,14,16,19,20,21,22,24,25,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,24,25,26,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,28,30")
+    ret.add("1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30")
+    ret.add("1,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,28,29,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,24,25,26,27,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30")
+    ret.add("1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30")
+    ret.add("1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,28,29,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30")
+    ret.add("1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30")
+    assert len(ret) == 13, "Correct has bad size"
+    return ret
+
 
 def main():
     nfa = get_nfa()
     print("reading NFA ... done.\n\n\n")
     epi = "E"
 
+    correct = get_correct_for_three()
 
     # nfa.dump()
     # exit(1)
 
     todo = list()
-    have_seen = list()
+    from_todo = set()
+    have_seen = set()
     results = list()
 
     new_to_old = dict()
@@ -232,18 +280,22 @@ def main():
 
     start = get_start(nfa)
 
+    print("Start: {}".format(hashable_list(start)))
+
     todo.append(start)
+    from_todo.add(hashable_list(start))
+
     print("creating corresponding DFA ...")
     j = 0
-    stop = 2
-    while len(todo) > 0 and j < stop:
-        item = todo.pop()
+
+    while len(todo) > 0:
+        item = todo.pop(0)
 
         hashable = hashable_list(item)
         if hashable in have_seen:
             continue
 
-        have_seen.append(hashable)
+        have_seen.add(hashable)
 
         # print("Doing work with item: {} of type: {}".format(item, type(item)))
         res = do_work(nfa, item)
@@ -251,11 +303,16 @@ def main():
         for pair in res:
             transition = pair[0]
             new_state = pair[1]
-            print("Adding from trans: ", transition)
+            # print("Adding from trans: ", transition)
             if new_state:
                 todo.append(new_state)
+                hashable = hashable_list(new_state)
+                from_todo.add(hashable)
 
         results.append([item, res])
+        if j == 0:
+            print("RES")
+            print(results)
         j += 1
 
     print("Calculated states for {} states".format(len(have_seen)))
@@ -267,18 +324,30 @@ def main():
     for (trans, reach) in can_see:
         print("\t{}:  {}".format(trans, hashable_list(reach)))
 
-
     print("\nTODO")
     for t in todo:
         print(hashable_list(t))
-    exit(1)
 
+    print("\nHave Seen:")
+    for item in have_seen:
+        print(item)
+
+    print("\nFrom todo")
+    for item in from_todo:
+        print(item)
+
+    # print("Missed")
+    # for m in set(missed):
+    #     print(m)
+
+    # exit(1)
 
     # reindex the provided initial state
     index = 1
     # new_to_old[""] = []
     # old_to_new[""] = []
 
+    print("\n\nNew States")
     for i in range(len(results)):
         item = results[i]
         old = hashable_list(item[0])
@@ -289,6 +358,8 @@ def main():
 
         results[i][0] = new
         print("{:<8}  -->  {}".format(new, old))
+        # assert old in correct, "BAD: {}".format(old)
+        # print(old)
 
     # sort the indexes
     # index = 1
@@ -321,7 +392,6 @@ def main():
             new_transition = (transition, old_to_new[key])
             new_items.append(new_transition)
 
-
         new_state = [index, new_items]
         new_states.append(new_state)
 
@@ -344,201 +414,9 @@ def main():
             # print(trans, reachable)
             if type(reachable) != list:
                 reachable = map(str, [reachable])
-            string += "{:>6}".format("{" + ",".join(reachable) +"}")
+            string += "{:>6}".format("{" + ",".join(reachable) + "}")
             if len(reachable) == 0:
                 "{:>6}".format("{}")
         print(string)
-
-    # for row in
-
-    # # exit(1)
-    # header = map(lambda x: x[1], reresults[0])
-    #
-    # string = "{:<8}".format("State")
-    # for state in header:
-    #     string += "{:<8}".format(state)
-    # print(string)
-    #
-    # for row in reresults:
-    #     state = row[0][0]
-    #     string = "{:<8}".format(state)
-    #     print("\n")
-    #     for x in row:
-    #         print(x)
-    #     for chunk in row:
-    #         chunk = map(str, chunk[2])
-    #         string += "{:<8}".format("{" + "".join(chunk) + "}")
-    #
-    #         # print(string)
-    #
-    #
-
-    # for row in results:
-    #     print(row)
-
-
-# def main():
-#     nfa = get_nfa()
-#     print("reading NFA ... done.\n\n\n")
-#     epi = "E"
-#
-#     # precompute all the e_closures and cache them
-#     # ahead of time for speed
-#     # for state in nfa.states:
-#     #     e_closure_one(nfa, str(state + 1))
-#
-#
-#     # for the search
-#     to_do = list()
-#     have_seen = list()
-#
-#     start = e_closure(nfa, nfa.initial)
-#
-#     start = map(int, start)
-#     start.sort()
-#     start = map(str, start)
-#
-#     results = list()
-#     to_do.append(start)
-#
-#     print("creating corresponding DFA ...")
-#
-#     while len(to_do) > 0:
-#         item = to_do.pop()
-#         hashable = ",".join(item)
-#         if hashable in have_seen:
-#             continue
-#
-#         have_seen.append(hashable)
-#         res = do_work(nfa, item)
-#
-#         results.append([item, res])
-#         for (trans, l) in res:
-#             for x in l:
-#                 to_do.append(x)
-#
-#
-#
-#
-#
-#     reindex = dict()
-#     rerev = dict()
-#
-#     results.sort(key=lambda l: l[0])
-#
-#     for row in results:
-#         start_state = row[0]
-#         print("\nState: ", start_state)
-#         # print(row[1])
-#         for transition in row[1]:
-#             t_type = transition[0]
-#             can_reach = transition[1:]
-#             print("On {} can reach:".format(t_type))
-#             print("\t", can_reach)
-#
-#     # sort the states for printing later
-#     for row in results:
-#         row[0] = map(int, row[0])
-#         row[0].sort()
-#         row[0] = map(str, row[0])
-#
-#
-#
-#     for row in results:
-#         print(row)
-#
-#     exit(1)
-
-    # for i in range(len(results)):
-    #     old = ",".join(results[i][0])
-    #     print("old: ", old)
-    #     new = i + 1
-    #     reindex[new] = old
-    #     rerev[old] = new
-    #     results[i][0] = new
-    #
-    # for key in reindex:
-    #     print("new DFA state:   {}   -->  {}".format(
-    #         key, "{" + reindex[key] + "}"
-    #     ))
-    # print("done.\n")
-
-    # finals = list()
-    # for res in results:
-    #     state = res[0]
-    #     for (trans, states) in res[1]:
-    #         # print("states:", states)
-    #         j = 0
-    #         for big_state in states:
-    #             for final in nfa.finals:
-    #                 if final in big_state:
-    #                     # print("state: ", state)
-    #                     try:
-    #                         state = map(int, big_state)
-    #                     except Exception as ex:
-    #                         print(ex)
-    #                         print("FAILURE")
-    #                         exit(1)
-    #                     state.sort()
-    #                     state = map(str, state)
-    #                     state = ",".join(state)
-    #                     finals.append(state)
-    #             j += 1
-    # finals = list(set(finals))
-    # finals.sort()
-    # # finals = map(lambda k: (rerev[k], k), finals)
-    # finals = map(lambda k: int(rerev[k]), finals)
-    #
-    # start = ",".join(start)
-    # start = (rerev[start], start)
-    #
-    # finals = map(str, finals)
-    #
-    # print("final DFA:")
-    # print("Initial State:  {}".format(start[0]))
-    # print("Final States:  {}".format("{" + ",".join(finals) + "}"))
-    # print("Total States:  {}".format(len(rerev.keys())))
-
-    # reresults = list()
-    #
-    # for item in results:
-    #     id = item[0]
-    #     states = item[1]
-    #     restates = list()
-    #     for (trans, l) in states:
-    #         ll = []
-    #         for chunk in l:
-    #             chunk = map(int, chunk)
-    #             chunk.sort()
-    #             chunk = map(str, chunk)
-    #             key = ",".join(chunk)
-    #             ll.append(rerev[key])
-    #         restates.append((id, trans, ll))
-    #     reresults.append(restates)
-    #
-    # # exit(1)
-    # header = map(lambda x: x[1], reresults[0])
-    #
-    # string = "{:<8}".format("State")
-    # for state in header:
-    #     string += "{:<8}".format(state)
-    # print(string)
-    #
-    # for row in reresults:
-    #     state = row[0][0]
-    #     string = "{:<8}".format(state)
-    #     print("\n")
-    #     for x in row:
-    #         print(x)
-    #     for chunk in row:
-    #         chunk = map(str, chunk[2])
-    #         string += "{:<8}".format("{" + "".join(chunk) + "}")
-    #
-    #         # print(string)
-    #
-    #
-
-
-
 
 main()
