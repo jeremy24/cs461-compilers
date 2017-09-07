@@ -265,24 +265,33 @@ def main():
     print("reading NFA ... done.\n\n\n")
     epi = "E"
 
-    correct = get_correct_for_three()
+    # debugging
+    # correct = get_correct_for_three()
 
     # nfa.dump()
     # exit(1)
 
+    # the QUEUE used for processing
     todo = list()
+
+    # for debugging
     from_todo = set()
+
+    # what we have seen and the final resulting tuples
     have_seen = set()
     results = list()
 
+    # lookup tables for when the states are reindexed below
     new_to_old = dict()
     old_to_new = dict()
 
     start = get_start(nfa)
 
-    print("Start: {}".format(hashable_list(start)))
+    # print("Start: {}".format(hashable_list(start)))
 
     todo.append(start)
+
+    # for debugging to see the order that things are processed
     from_todo.add(hashable_list(start))
 
     print("creating corresponding DFA ...")
@@ -296,8 +305,6 @@ def main():
             continue
 
         have_seen.add(hashable)
-
-        # print("Doing work with item: {} of type: {}".format(item, type(item)))
         res = do_work(nfa, item)
 
         for pair in res:
@@ -310,44 +317,14 @@ def main():
                 from_todo.add(hashable)
 
         results.append([item, res])
-        if j == 0:
-            print("RES")
-            print(results)
         j += 1
 
-    print("Calculated states for {} states".format(len(have_seen)))
+    # print("Calculated states for {} states".format(len(have_seen)))
 
-    row = results[0]
-    head = hashable_list(row[0])
-    print(head)
-    can_see = row[1]
-    for (trans, reach) in can_see:
-        print("\t{}:  {}".format(trans, hashable_list(reach)))
 
-    print("\nTODO")
-    for t in todo:
-        print(hashable_list(t))
 
-    print("\nHave Seen:")
-    for item in have_seen:
-        print(item)
-
-    print("\nFrom todo")
-    for item in from_todo:
-        print(item)
-
-    # print("Missed")
-    # for m in set(missed):
-    #     print(m)
-
-    # exit(1)
-
-    # reindex the provided initial state
+    # reindex all of the resulting states and make the lookup tables
     index = 1
-    # new_to_old[""] = []
-    # old_to_new[""] = []
-
-    print("\n\nNew States")
     for i in range(len(results)):
         item = results[i]
         old = hashable_list(item[0])
@@ -357,29 +334,14 @@ def main():
         old_to_new[old] = new
 
         results[i][0] = new
-        print("{:<8}  -->  {}".format(new, old))
-        # assert old in correct, "BAD: {}".format(old)
-        # print(old)
+        print("new DFA state:  {:<5}  -->  {}".format(new, "{" + old + "}"))
 
-    # sort the indexes
-    # index = 1
-    # for key in old_to_new.keys():
-    #     new = index
-    #     old_to_new[key] = new
-    #     new_to_old[new]  = key
-    #     old = key
-    #     print("{:<8}  -->  {}".format(new, old))
-    #     index += 1
-
-
-    # for row in results:
-    #     print("\n", row[0])
-    #     for c in row[1]:
-    #         print("\t", c)
-
+    print("done.\n")
 
     new_states = list()
-    # reindex the reachable states
+    new_finals = set()
+    # set the correct new index for all of the reachable
+    # states for each transition
     for row in results:
         new_items = list()
         index = row[0]
@@ -388,6 +350,9 @@ def main():
                 new_items.append((transition, []))
                 continue
             key = hashable_list(reachable)
+            for final in nfa.finals:
+                if final in reachable:
+                    new_finals.add(old_to_new[key])
             # print(key)
             new_transition = (transition, old_to_new[key])
             new_items.append(new_transition)
@@ -395,15 +360,24 @@ def main():
         new_state = [index, new_items]
         new_states.append(new_state)
 
-    # print(results[0])
-    # print(new_states[0])
+
+    # check if initial can be final
+    # since for some reason is gets skipped
+    for state in get_start(nfa):
+        if state in nfa.finals:
+            new_finals.add(old_to_new[hashable_list(get_start(nfa))])
+
+    print("final DFA:")
+    print("Initial State:  {}".format(old_to_new[hashable_list(get_start(nfa))]))
+    print("Final States:   {}".format("{" + hashable_list(list(new_finals)) + "}"))
+    print("total States:   {}".format(len(new_states)))
 
     string = '{:<8}'.format("State")
 
     for transition in nfa.transitions:
         if transition == epi:
             continue
-        string += "{:>6}".format(transition)
+        string += "{:<10}".format(transition)
     print(string)
 
     for row in new_states:
@@ -414,7 +388,7 @@ def main():
             # print(trans, reachable)
             if type(reachable) != list:
                 reachable = map(str, [reachable])
-            string += "{:>6}".format("{" + ",".join(reachable) + "}")
+            string += "{:<10}".format("{" + ",".join(reachable) + "}")
             if len(reachable) == 0:
                 "{:>6}".format("{}")
         print(string)
