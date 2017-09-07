@@ -88,78 +88,6 @@ def get_nfa():
     print("NFA built")
     return nfa
 
-
-def get_accessable(nfa, state, only_do_tran=None):
-    trans = nfa.transitions
-    states = nfa.state_map
-    epi = "E"
-
-    print("\nState: {} Trans: {}".format(state, only_do_tran))
-
-    # print("\nGetting {} for state {}".format(only_do_tran, state))
-    can_access = list()    
-
-    # can_do_epi = len(can_access) == 0
-    can_do_epi = True
-
-    # if state has a transition for only_do_tran then we
-    # cannot follow any epsilion transitions for state
-    if only_do_tran is not None:
-        if len(states[state][only_do_tran]) > 0:
-            # if we have the desired trans we cannot take the epi first
-            can_do_epi = False
-        elif str(state) == str(nfa.initial):
-            print("Adding in epi closure for initial: {}".format(state))
-            # if it has a episilion trans then it can stay at itself
-            if len(states[state][epi]) > 0:
-                can_access.append(state)
-            
-
-    # loop thru all possible transition states
-    is_first = True
-    for tran in trans:
-        if only_do_tran is not None:
-            if tran != only_do_tran:
-                continue
-        if len(states[state][tran]) == 0:
-            pass
-        for item in states[state][tran]:
-            can_access.append(item)
-        i = 0
-
-    
-        print("Can do epsilion: ", can_do_epi)
-        print("Can access: {}".format(can_access))
-        # this list will be reset for EACH possible transition
-        # type since each one needs to be searched
-        has_visited = list()
-        while i < nfa.total:
-            for item in can_access:
-                item = str(item)
-                try:
-                    if len(states[item][epi]) == 0:
-                        # print("{} has no epis, skipping".format(state))
-                        # i += 1
-                        continue
-                    if item not in has_visited:
-                        has_visited.append(item)
-                        for epi_state in states[item][epi]:
-                            if item == state and str(state) != str(nfa.initial):
-                                print("Cannot take an epi trans first!")
-                                break
-                            if can_do_epi == False:
-                                if int(item) == int(state):
-                                    print("Skipping {} cant to epis".format(item))
-                                    break
-                            print("Checking state {} for epis".format(epi_state))
-                            can_access.append(epi_state)
-                except KeyError as ex:
-                    print("KeyError: ", ex)
-                    exit(1)
-            i += 1
-        is_first = False
-    return list(set(can_access))
-
 def e_closure(nfa, state, force=False):
     can_access = list()
     has_visited = list()
@@ -180,7 +108,7 @@ def e_closure(nfa, state, force=False):
             is_valid = True
         ret.append(x)
         can_access.append(x)
-
+        
     # if not is_valid and not force:
     #     return list()
 
@@ -277,24 +205,24 @@ def main():
             for x in l:
                 to_do.append(x)
 
-    row = results[0]
-    print(type(row))
-    print(type(row[0]))
-    print("row[0]")
-    print(row[0])
+    # row = results[0]
+    # print(type(row))
+    # print(type(row[0]))
+    # print("row[0]")
+    # print(row[0])
     
-    for tran in row[1]:
-        print("\n",tran)
+    # for tran in row[1]:
+    #     print("\n",tran)
 
-    exit(1)
+    # exit(1)
 
-    for row in results:
-        for x in row:
-            if len(x) < 10:
-                print("\n\nthing:", x)
+    # for row in results:
+    #     for x in row:
+    #         if len(x) < 10:
+    #             print("\n\nthing:", x)
 
-        print("\n")
-    exit(1)
+    #     print("\n")
+    # exit(1)
 
     reindex = dict()
     rerev = dict()
