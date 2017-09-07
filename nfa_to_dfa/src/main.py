@@ -29,6 +29,7 @@ class Nfa:
         for final in self.finals:
             assert final in self.state_map.keys(), "{} not in keys".format(final)
 
+    # dump the nfa as a table
     def dump(self):
         print("NFA:")
         print("\tInitial: {}".format(self.initial))
@@ -47,14 +48,15 @@ class Nfa:
             self.initial, self.finals, len(self.states)
         )
 
-
+# parse in an nfa from STDIN
+# lots of random map and filter calls since
+# thats the slow but easy way to do it
 def get_nfa():
     print("Starting NFA input parse...")
     lines = list()
-    for line in fileinput.input():
-        item = line.strip()
-        lines.append(item)
-        # print("["+item+"]")
+
+    lines = map(lambda x: x.strip(), fileinput.input())
+
     initial = lines[0].replace("Initial State:", "").strip()
     initial = int(initial)
 
@@ -90,10 +92,6 @@ def get_nfa():
             tran_map[trans] = newstates
         state_map[key] = tran_map
 
-    # print("Initial =>", initial)
-    # print("Final =>", finals)
-    # print("Total =>", total)
-    # print("States =>", states)
     nfa = Nfa(initial, finals, total, states, state_map)
     assert isinstance(nfa, Nfa)
     print("NFA built")
@@ -110,45 +108,9 @@ def e_closure(nfa, states):
     return list(set(results))
 
 
-
-# def e_closure(nfa, states):
-# WORKING
-#     assert type(states) == list, "States passed to e_closure must be a list"
-#
-#     epi = "E"
-#
-#     stack = list()
-#     result = set()
-#
-#     for state in states:
-#         stack.append(state)
-#         result.add(state)
-#
-#     while len(stack) > 0:
-#         state = str(stack.pop())
-#         for epi_state in nfa.state_map[state][epi]:
-#             epi_state = str(epi_state)
-#             if epi_state not in result:
-#                 result.add(epi_state)
-#                 stack.append(epi_state)
-#     return result
-
-
-# def e_closure_one(nfa, state):
-#     epi = "E"
-#
-#     stack = list()
-#     result = list()
-#     seen = list()
-
-
 def e_closure_one(nfa, state):
     epi = "E"
     global e_closure_cache
-
-    # if hashable(state) in e_closure_cache.keys():
-    #     # print("Cached")
-    #     return e_closure_cache[str(state)]
 
     # see it with the given states
     ret = set()
@@ -168,8 +130,6 @@ def e_closure_one(nfa, state):
             ret.add(reachable_state)
 
     val = map(str, list(set(ret)))
-    # e_closure_cache[str(state)] = val
-
     return val
 
 
@@ -179,8 +139,7 @@ def move_one(nfa, state, transition):
     assert int(state) > 0, "Invalid state passed in to move_one: {}".format(state)
     assert type(state) == str, "State passed to move one must be a string"
 
-    for item in nfa.state_map[state][transition]:
-        can_access.add(item)
+    map(can_access.add, nfa.state_map[state][transition])
 
     return can_access
 
@@ -198,14 +157,9 @@ def move(nfa, states, transition):
 
 
 def do_work_trans(nfa, state, transition):
-    mv = move(nfa, state, transition)
-    e_clos = e_closure(nfa, mv)
-
-
-    res = map(str, e_clos)
-    res = set(res)
-
-    return list(res)
+    e_clos = e_closure(nfa, move(nfa, state, transition))
+    result = set(map(str, e_clos))
+    return list(result)
 
 
 def do_work(nfa, state):
@@ -216,31 +170,26 @@ def do_work(nfa, state):
         state = [state]
 
     for transition in nfa.transitions:
-        if transition == epi:
-            continue
-        new_state = do_work_trans(nfa, state, transition)
-        pair = (transition, new_state)
-        results.append(pair)
+        if transition != epi:
+            new_state = do_work_trans(nfa, state, transition)
+            pair = (transition, new_state)
+            results.append(pair)
 
     return results
 
 
 def do_sort(states):
-    states = map(int, states)
-    states.sort()
-    return map(str, states)
+    return map(str, sorted(map(int, states)))
 
 
 def get_start(nfa):
-    start = e_closure(nfa, [nfa.initial])
-    return do_sort(start)
+    return do_sort(e_closure(nfa, [nfa.initial]))
 
 
 def hashable_list(l):
-    l = do_sort(l)
-    return ",".join(l)
+    return ",".join(do_sort(l))
 
-
+# debugging
 def get_correct_for_three():
     ret = set()
     ret.add("1,3,4,5,6,8,9,10,11,13,14,16,19,20,21,22,24,25,30")
@@ -318,9 +267,6 @@ def main():
 
         results.append([item, res])
         j += 1
-
-    # print("Calculated states for {} states".format(len(have_seen)))
-
 
 
     # reindex all of the resulting states and make the lookup tables
