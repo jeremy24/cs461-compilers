@@ -14,7 +14,7 @@
 
 [=]*	 { return *yytext; }
 
-[+\-/*]  { return *yytext; }
+[+\-/*]  {  printf("OPER: ");return *yytext; }
 
 
 [\^&|~]	  { return *yytext; }
@@ -26,6 +26,10 @@
 
 ">>" { return RSHIFT; }
 
+[Dd][Uu][Mm][Pp]		{ return DUMP;	}
+	
+[Cc][Ll][Ee][Aa][Rr]	{ return CLEAR;	}
 
+[ \t]*				
 
 .         { return yytext[0]; }
