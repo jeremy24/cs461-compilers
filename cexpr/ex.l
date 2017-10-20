@@ -14,12 +14,10 @@
 
 [=]*	 { return *yytext; }
 
-[+\-/*]  {  printf("OPER: ");return *yytext; }
+[+\-/*]  { return *yytext; }
 
 
 [\^&|~]	  { return *yytext; }
-
-[+-/*|&\^]"=" { return *yytext; }
 
 
 "<<" { return LSHIFT; }
