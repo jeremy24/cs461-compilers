@@ -60,7 +60,7 @@ commands:	command	';'
 		|	commands command ';'
 		;
 
-command	:	EXPR			{  /*printf("%d\n", $1);*/ }
+command	:	EXPR			{  if(error==0) { printf("%d\n", $1); } error=0; }
 		|	VAR				{  }
 		|	DUMP				{	
 									size_t i = 0;
@@ -133,11 +133,11 @@ EXPR_ASSIGN		:	EXPR_ASSIGN_SIMPLE
 EXPR_ASSIGN_LOOP	:	EXPR_ASSIGN_LOOP '=' VAR { sym[$3] = sym[$1]; }
 					;
 
-EXPR_ASSIGN_SIMPLE	:	EXPR_BIT_OR				{ if ( error == 0 ) { printf("%d", $1); } error = 0; }
+EXPR_ASSIGN_SIMPLE	:	EXPR_BIT_OR				{ if ( error == 0 ) { /*printf("E: %d", $1);*/ } error = 0; }
 					/*|	VAR '=' NUM				{ sym[$1] = $3; printf("ASN SMP %d\n", sym[$1]); }
 					|	VAR '=' VAR				{ sym[$1] = sym[$3]; printf("%d\n", sym[$1]); }
 					*/
-					|	VAR '=' EXPR_BIT_NOT	{ sym[$1] = $3; if(error==0) { printf("%d", $3); } error=0; }
+					|	VAR '=' EXPR_BIT_NOT	{ sym[$1] = $3; if(error==0) { printf("A: %d", $3); } error=0; }
 					;
 
 
@@ -186,7 +186,7 @@ EXPR_BIT_NOT	:	EXPR_PARENS
 				;
 
 
-EXPR_PARENS	:	'(' command ')'	{ $$ = $2;	}
+EXPR_PARENS	:	'(' EXPR ')'	{ $$ = $2;	}
 			|	VAR				{ $$ = sym[$1]; }
 			|	NUM	
 			;
