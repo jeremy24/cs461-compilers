@@ -1,0 +1,160 @@
+/*
+ * This file defines an example yacc grammar for simple C expressions.
+ */
+
+%{
+	#include <stdio.h>
+	int sym[26] =  {0};
+%}
+
+%union {
+  int num;
+}
+
+%token <num> NUM
+%token <num> VAR
+
+%token<num> LSHIFT
+%token<num> RSHIFT
+
+%token<num> DUMP
+%token<num> CLEAR
+
+%token<num> ASSIGN
+
+%type <num> expr1
+%type <num> expr
+
+//%left '+' '*'
+
+
+%%
+commands:
+	|	commands command ';'
+	;
+
+command	:	expr				{ printf("%d\n", $1); }
+		|	DUMP				{	
+									size_t i = 0;
+									for( i = 0 ; i < 26 ; ++i) 
+									{
+										char toke = i + 'a';
+										printf("%c: %d\n",  toke, + sym[i]);
+									}
+								}
+		|	CLEAR				{	memset(sym, 0x0, sizeof(int)*26); }
+
+		|	VAR '='	expr		{ sym[$1] = $3;}		
+		|	VAR ASSIGN expr		{
+									int flag = $2;
+									int * curr = sym + $1;
+									
+
+									switch(flag)
+									{
+										case (int) '+':
+											*curr = *curr + $3;
+											break;
+										
+										case (int) '-':
+											*curr = *curr - $3;
+											break;
+
+										case (int) '*':
+											*curr = (*curr) * $3;
+											break;	
+										
+										case (int) '/':
+											*curr = *curr / $3;
+											break;
+										
+										case (int) '%':
+											*curr = *curr % $3;
+											break;
+										
+										case (int) '<':
+											*curr = *curr << $3;
+											break;
+										
+										case (int) '>':
+											*curr = *curr >> $3;
+											break;
+
+										case (int) '&':
+											*curr = *curr & $3;
+											break;
+
+										case (int) '^':
+											*curr = *curr ^ $3;
+											break;
+
+										case (int) '|':
+											*curr = *curr | $3;	
+											break;
+									}
+								}
+	;
+
+
+
+expr	:	{;}		
+		|	VAR					{ $$ = sym[$1]; }
+		|	NUM					{ $$ = $1;		}
+		|	expr1 '*' NUM		{ $$ = $1 * $3; }
+		/*|					{ $$ = $1;		}*/
+		;
+	
+expr1	:	expr '+' expr1		{ $$ = $1 + $3; }
+
+
+	
+
+/*
+				
+		// or
+		| expr '|' NUM			{ int v = $1; $$ = v | $3; }
+
+		// xor
+		| expr '^' NUM		{ int v = $1; $$ = v ^ $3; }
+	
+		// and
+		|	expr '&' NUM		{ int v = $1; $$ = v & $3; }	
+
+		| expr LSHIFT NUM		{ int v = $1; $$ = v << $3; }
+		| expr RSHIFT NUM		 { int v = $1; $$ = v >> $3; }
+
+		|	expr '*' NUM		{ int v = $1; $$ = v * $3; }
+		|	expr '-' NUM		{ int v = $1; $$ = v - $3; }		
+
+		|	expr '+' NUM		{ int v = $1;  $$ = v + $3; }
+		|	expr '/' NUM		{ int v = $1;  $$ = v / $3;	}
+		|	expr '%' NUM		{ int v = $1;  $$ = v % $3; }
+
+		|	'-'	expr			{ int v = -$2; $$ = v;	}	
+		
+		|	'~' expr		{ int v = ~$2;	$$ = v; }
+		
+		| '(' expr ')'			{ $$ = $2; }
+
+*/
+		;
+
+
+
+
+
+%%
+
+main()
+{
+   if (yyparse())
+      printf("\nInvalid expression.\n");
+   else
+      printf("\nCalculator off.\n");
+}
+
+yyerror(s)
+char *s;
+{
+   fprintf(stderr, "%s\n", s);
+}

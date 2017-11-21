@@ -1,0 +1,2075 @@
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+5713848
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+7
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+20
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+1
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+88
+dividebyzero
+dividebyzero
+121
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+2
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-9
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+63
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+7
+a: 0
+b: 0
+c: 0
+d: 0
+e: 7
+f: 0
+g: 7
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 7
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 7
+f: 0
+g: 7
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 7
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+-68
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: -68
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+0
+dividebyzero
+694
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-11
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-33
+8
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 8
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+-23
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: -23
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: -23
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-19
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+120
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+-14
+dividebyzero
+-1
+dividebyzero
+dividebyzero
+-81
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+-11
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+22
+dividebyzero
+dividebyzero
+dividebyzero
+-70
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+12
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+66
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+4
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+
+Calculator off.

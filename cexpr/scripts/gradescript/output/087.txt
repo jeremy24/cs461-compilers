@@ -1,0 +1,193 @@
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+2
+dividebyzero
+dividebyzero
+11
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: -2
+g: 0
+h: 0
+i: 0
+j: 0
+k: 2
+l: 0
+m: 0
+n: 2
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+1
+dividebyzero
+dividebyzero
+16546
+-118
+a: 0
+b: -118
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+109
+dividebyzero
+dividebyzero
+-49
+dividebyzero
+dividebyzero
+10
+dividebyzero
+-232119
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+50
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+355
+dividebyzero
+dividebyzero
+64
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-24
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-51
+
+Calculator off.

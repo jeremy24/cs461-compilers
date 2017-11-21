@@ -1,0 +1,1434 @@
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-4
+-66
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+dividebyzero
+-116
+dividebyzero
+-273
+-10
+3
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 3
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+-64
+0
+dividebyzero
+dividebyzero
+-7
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: -64
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: -1
+o: 0
+p: 3
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+0
+dividebyzero
+-33
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-186
+-10
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-8165
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: -8165
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+0
+-10
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+4
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-9
+83
+dividebyzero
+dividebyzero
+477
+-2
+dividebyzero
+9
+dividebyzero
+41
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+428
+0
+dividebyzero
+dividebyzero
+179
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+900
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 428
+i: -2
+j: 0
+k: 0
+l: 0
+m: 0
+n: -1343
+o: 0
+p: 0
+q: -10
+r: 0
+s: 0
+t: 0
+u: 900
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+0
+dividebyzero
+-1096
+dividebyzero
+-9
+dividebyzero
+68
+dividebyzero
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+-3353
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-60
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-111
+dividebyzero
+7
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+51
+dividebyzero
+dividebyzero
+0
+dividebyzero
+3675984
+1595584
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: -1096
+d: 0
+e: 0
+f: 0
+g: 1
+h: 428
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 3675984
+o: 0
+p: -3353
+q: 10
+r: -1096
+s: 0
+t: -3353
+u: 900
+v: 0
+w: 0
+x: -3354
+y: -1
+z: -3353
+0
+365
+0
+0
+-904
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+7
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+-10
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-1096
+14
+dividebyzero
+0
+2
+1
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+overflow
+dividebyzero
+dividebyzero
+-166216
+dividebyzero
+-1
+-49
+dividebyzero
+25
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-140
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+88
+dividebyzero
+dividebyzero
+8
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+987
+dividebyzero
+dividebyzero
+dividebyzero
+7
+14
+0
+dividebyzero
+0
+0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 71
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+0
+dividebyzero
+0
+-209
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+712576
+dividebyzero
+dividebyzero
+dividebyzero
+-139
+-36
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-1
+-4
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-612
+-1
+dividebyzero
+-37
+-37
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-9
+260
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+dividebyzero
+-1
+2
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+-19
+dividebyzero
+0
+dividebyzero
+overflow
+dividebyzero
+0
+dividebyzero
+38
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-24
+dividebyzero
+-6
+9
+0
+70
+0
+dividebyzero
+dividebyzero
+-3852
+0
+dividebyzero
+dividebyzero
+dividebyzero
+30
+dividebyzero
+0
+dividebyzero
+-33
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+-12
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+29
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+60
+dividebyzero
+dividebyzero
+0
+dividebyzero
+7
+dividebyzero
+23
+0
+dividebyzero
+dividebyzero
+-70
+dividebyzero
+dividebyzero
+0
+-445
+dividebyzero
+overflow
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+26
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+17
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+0
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: -141
+x: 0
+y: 0
+z: 0
+174960
+dividebyzero
+-1690
+16
+9914
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+16
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+dividebyzero
+0
+dividebyzero
+0
+dividebyzero
+2
+dividebyzero
+dividebyzero
+0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 16
+k: 0
+l: 0
+m: 0
+n: -5
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 16
+u: 0
+v: 0
+w: -141
+x: 0
+y: 0
+z: 0
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-1
+0
+dividebyzero
+126
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+56
+-1
+dividebyzero
+dividebyzero
+0
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 16
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: -31
+s: 0
+t: 16
+u: 0
+v: 0
+w: -141
+x: 0
+y: 0
+z: 0
+0
+dividebyzero
+-4
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+0
+dividebyzero
+-13
+-31
+dividebyzero
+dividebyzero
+16
+2045
+dividebyzero
+101
+16
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+8
+dividebyzero
+4
+dividebyzero
+21
+dividebyzero
+191
+dividebyzero
+dividebyzero
+0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-28
+0
+dividebyzero
+42
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-4
+0
+dividebyzero
+6
+dividebyzero
+dividebyzero
+24
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+16
+dividebyzero
+dividebyzero
+183
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+1
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-20
+0
+dividebyzero
+dividebyzero
+224
+dividebyzero
+0
+4
+dividebyzero
+dividebyzero
+0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+-18
+dividebyzero
+dividebyzero
+dividebyzero
+-143
+dividebyzero
+-141
+5
+dividebyzero
+-6
+1
+dividebyzero
+-1
+dividebyzero
+0
+dividebyzero
+-7
+0
+dividebyzero
+dividebyzero
+9
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+30
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+80
+dividebyzero
+-813
+6
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+56
+0
+-146
+-20
+dividebyzero
+-15
+dividebyzero
+dividebyzero
+-1
+dividebyzero
+2
+dividebyzero
+dividebyzero
+4
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+0
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-465
+0
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+6
+15
+dividebyzero
+4
+dividebyzero
+-408
+-78
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+7
+dividebyzero
+0
+0
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-11
+dividebyzero
+1731
+dividebyzero
+dividebyzero
+dividebyzero
+2328
+754
+13
+-9
+-50
+dividebyzero
+dividebyzero
+-1
+-3
+-102499
+a: -1
+b: 0
+c: 0
+d: 0
+e: -1
+f: -102499
+g: 0
+h: 0
+i: 13
+j: 0
+k: 0
+l: 13
+m: 0
+n: -11
+o: 0
+p: 0
+q: 0
+r: 0
+s: -1
+t: 0
+u: 0
+v: -1
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+16
+1953
+102591
+dividebyzero
+dividebyzero
+-233
+1
+dividebyzero
+0
+19
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+833
+-215
+18
+102497
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+17
+81200
+15504
+dividebyzero
+28
+0
+38
+12
+0
+dividebyzero
+-9
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+4
+dividebyzero
+dividebyzero
+-2
+47
+dividebyzero
+2
+dividebyzero
+0
+-529
+0
+-1
+92
+dividebyzero
+dividebyzero
+dividebyzero
+-102416
+dividebyzero
+dividebyzero
+dividebyzero
+-762
+14
+dividebyzero
+-97
+-17
+dividebyzero
+dividebyzero
+102469
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+2145
+dividebyzero
+-443
+overflow
+dividebyzero
+overflow
+-467
+1
+70
+6850230
+dividebyzero
+-50762
+-2
+-5
+-8
+dividebyzero
+87
+dividebyzero
+-9673
+-215
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-12
+10
+dividebyzero
+-15
+dividebyzero
+dividebyzero
+dividebyzero
+a: -50762
+b: 0
+c: 117605
+d: 0
+e: -762
+f: -102499
+g: 0
+h: 0
+i: 228
+j: 0
+k: -102416
+l: 0
+m: -1138
+n: -11
+o: 102469
+p: 12
+q: 102499
+r: 0
+s: 10
+t: 71
+u: -467
+v: -1
+w: 0
+x: 0
+y: 87
+z: 1953
+dividebyzero
+dividebyzero
+-1125
+dividebyzero
+a: -50762
+b: 0
+c: 117605
+d: 0
+e: -762
+f: -102499
+g: 0
+h: 0
+i: 228
+j: 0
+k: -102416
+l: 0
+m: -1125
+n: -11
+o: 102469
+p: 12
+q: 102499
+r: 0
+s: 10
+t: 71
+u: -467
+v: -1
+w: 0
+x: 0
+y: 87
+z: 1953
+dividebyzero
+dividebyzero
+2
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-1
+0
+dividebyzero
+-1
+dividebyzero
+dividebyzero
+69
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+6
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+5
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+3
+8
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-2
+dividebyzero
+dividebyzero
+0
+dividebyzero
+dividebyzero
+-12
+7
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 8
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 3
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+-220
+dividebyzero
+-89
+dividebyzero
+dividebyzero
+-8
+dividebyzero
+dividebyzero
+dividebyzero
+a: 0
+b: 0
+c: 0
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 8
+l: 0
+m: 0
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 3
+u: 0
+v: 0
+w: 0
+x: 0
+y: 0
+z: 0
+dividebyzero
+dividebyzero
+dividebyzero
+4
+73
+8
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+1
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-7
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+8
+dividebyzero
+dividebyzero
+dividebyzero
+2
+dividebyzero
+-418
+-1
+dividebyzero
+dividebyzero
+-8
+-10
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+1
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+159
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-195
+dividebyzero
+11
+dividebyzero
+dividebyzero
+dividebyzero
+0
+dividebyzero
+-70
+dividebyzero
+dividebyzero
+0
+-103
+-608
+overflow
+dividebyzero
+a: 0
+b: 0
+c: -97
+d: 0
+e: 0
+f: 0
+g: 0
+h: 0
+i: 0
+j: 0
+k: 0
+l: 0
+m: 16
+n: 0
+o: 0
+p: 0
+q: 0
+r: 0
+s: 0
+t: 0
+u: 0
+v: 17
+w: 0
+x: 0
+y: 0
+z: -97
+dividebyzero
+0
+dividebyzero
+dividebyzero
+dividebyzero
+dividebyzero
+-74
+dividebyzero
+87392
+dividebyzero
+
+Calculator off.

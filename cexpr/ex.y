@@ -137,7 +137,7 @@ EXPR_ASSIGN_SIMPLE	:	EXPR_BIT_OR				{ if ( error == 0 ) { /*printf("E: %d", $1);
 					/*|	VAR '=' NUM				{ sym[$1] = $3; printf("ASN SMP %d\n", sym[$1]); }
 					|	VAR '=' VAR				{ sym[$1] = sym[$3]; printf("%d\n", sym[$1]); }
 					*/
-					|	VAR '=' EXPR_BIT_NOT	{ sym[$1] = $3; if(error==0) { printf("A: %d", $3); } error=0; }
+					|	VAR '=' EXPR_BIT_NOT	{ sym[$1] = $3; if(error==0) { printf("%c: %d", (char)$1+'a', $3); error=1; }else{ error=0; } }
 					;
 
 

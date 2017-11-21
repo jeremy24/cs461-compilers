@@ -1,0 +1,739 @@
+   0  $accept : commands $end
+
+   1  commands : command ';'
+   2           | commands command ';'
+
+   3  command : EXPR
+   4          | VAR
+   5          | DUMP
+   6          | CLEAR
+
+   7  EXPR : EXPR_ASSIGN
+
+   8  EXPR_ASSIGN : EXPR_ASSIGN_SIMPLE
+   9              | VAR ASSIGN EXPR_ADD_SUB
+
+  10  EXPR_ASSIGN_LOOP : EXPR_ASSIGN_LOOP '=' VAR
+
+  11  EXPR_ASSIGN_SIMPLE : EXPR_BIT_OR
+  12                     | VAR '=' EXPR_BIT_NOT
+
+  13  EXPR_BIT_OR : EXPR_BIT_XOR
+  14              | EXPR_BIT_OR '|' EXPR_BIT_XOR
+
+  15  EXPR_BIT_XOR : EXPR_BIT_AND
+  16               | EXPR_BIT_XOR '^' EXPR_BIT_AND
+
+  17  EXPR_BIT_AND : EXPR_SHIFT
+  18               | EXPR_BIT_AND '&' EXPR_SHIFT
+
+  19  EXPR_SHIFT : EXPR_ADD_SUB
+  20             | EXPR_SHIFT LSHIFT EXPR_ADD_SUB
+  21             | EXPR_SHIFT RSHIFT EXPR_ADD_SUB
+
+  22  EXPR_ADD_SUB : EXPR_MULT_DIV
+  23               | EXPR_ADD_SUB '+' EXPR_MULT_DIV
+  24               | EXPR_ADD_SUB '-' EXPR_MULT_DIV
+
+  25  EXPR_MULT_DIV : EXPR_NEGATE
+  26                | EXPR_MULT_DIV '*' EXPR_NEGATE
+  27                | EXPR_MULT_DIV '/' EXPR_NEGATE
+  28                | EXPR_MULT_DIV '%' EXPR_NEGATE
+
+  29  EXPR_NEGATE : EXPR_BIT_NOT
+  30              | '-' EXPR_BIT_NOT
+
+  31  EXPR_BIT_NOT : EXPR_PARENS
+  32               | '~' EXPR_PARENS
+
+  33  EXPR_PARENS : '(' EXPR ')'
+  34              | VAR
+  35              | NUM
+
+state 0
+	$accept : . commands $end  (0)
+
+	NUM  shift 1
+	VAR  shift 2
+	DUMP  shift 3
+	CLEAR  shift 4
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	commands  goto 8
+	EXPR  goto 9
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_ASSIGN  goto 12
+	EXPR_ASSIGN_SIMPLE  goto 13
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 16
+	EXPR_BIT_AND  goto 17
+	EXPR_BIT_XOR  goto 18
+	EXPR_BIT_OR  goto 19
+	EXPR_PARENS  goto 20
+	command  goto 21
+
+
+state 1
+	EXPR_PARENS : NUM .  (35)
+
+	.  reduce 35
+
+
+2: reduce/reduce conflict (reduce 4, reduce 34) on ';'
+state 2
+	command : VAR .  (4)
+	EXPR_ASSIGN : VAR . ASSIGN EXPR_ADD_SUB  (9)
+	EXPR_ASSIGN_SIMPLE : VAR . '=' EXPR_BIT_NOT  (12)
+	EXPR_PARENS : VAR .  (34)
+
+	ASSIGN  shift 22
+	'='  shift 23
+	LSHIFT  reduce 34
+	RSHIFT  reduce 34
+	';'  reduce 4
+	'|'  reduce 34
+	'^'  reduce 34
+	'&'  reduce 34
+	'+'  reduce 34
+	'-'  reduce 34
+	'*'  reduce 34
+	'/'  reduce 34
+	'%'  reduce 34
+
+
+state 3
+	command : DUMP .  (5)
+
+	.  reduce 5
+
+
+state 4
+	command : CLEAR .  (6)
+
+	.  reduce 6
+
+
+state 5
+	EXPR_NEGATE : '-' . EXPR_BIT_NOT  (30)
+
+	NUM  shift 1
+	VAR  shift 24
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_BIT_NOT  goto 25
+	EXPR_PARENS  goto 20
+
+
+state 6
+	EXPR_BIT_NOT : '~' . EXPR_PARENS  (32)
+
+	NUM  shift 1
+	VAR  shift 24
+	'('  shift 7
+	.  error
+
+	EXPR_PARENS  goto 26
+
+
+state 7
+	EXPR_PARENS : '(' . EXPR ')'  (33)
+
+	NUM  shift 1
+	VAR  shift 27
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR  goto 28
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_ASSIGN  goto 12
+	EXPR_ASSIGN_SIMPLE  goto 13
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 16
+	EXPR_BIT_AND  goto 17
+	EXPR_BIT_XOR  goto 18
+	EXPR_BIT_OR  goto 19
+	EXPR_PARENS  goto 20
+
+
+state 8
+	$accept : commands . $end  (0)
+	commands : commands . command ';'  (2)
+
+	$end  accept
+	NUM  shift 1
+	VAR  shift 2
+	DUMP  shift 3
+	CLEAR  shift 4
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR  goto 9
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_ASSIGN  goto 12
+	EXPR_ASSIGN_SIMPLE  goto 13
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 16
+	EXPR_BIT_AND  goto 17
+	EXPR_BIT_XOR  goto 18
+	EXPR_BIT_OR  goto 19
+	EXPR_PARENS  goto 20
+	command  goto 29
+
+
+state 9
+	command : EXPR .  (3)
+
+	.  reduce 3
+
+
+state 10
+	EXPR_SHIFT : EXPR_ADD_SUB .  (19)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '+' EXPR_MULT_DIV  (23)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '-' EXPR_MULT_DIV  (24)
+
+	'+'  shift 30
+	'-'  shift 31
+	LSHIFT  reduce 19
+	RSHIFT  reduce 19
+	';'  reduce 19
+	'|'  reduce 19
+	'^'  reduce 19
+	'&'  reduce 19
+	')'  reduce 19
+
+
+state 11
+	EXPR_ADD_SUB : EXPR_MULT_DIV .  (22)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '*' EXPR_NEGATE  (26)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '/' EXPR_NEGATE  (27)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '%' EXPR_NEGATE  (28)
+
+	'*'  shift 32
+	'/'  shift 33
+	'%'  shift 34
+	LSHIFT  reduce 22
+	RSHIFT  reduce 22
+	';'  reduce 22
+	'|'  reduce 22
+	'^'  reduce 22
+	'&'  reduce 22
+	'+'  reduce 22
+	'-'  reduce 22
+	')'  reduce 22
+
+
+state 12
+	EXPR : EXPR_ASSIGN .  (7)
+
+	.  reduce 7
+
+
+state 13
+	EXPR_ASSIGN : EXPR_ASSIGN_SIMPLE .  (8)
+
+	.  reduce 8
+
+
+state 14
+	EXPR_NEGATE : EXPR_BIT_NOT .  (29)
+
+	.  reduce 29
+
+
+state 15
+	EXPR_MULT_DIV : EXPR_NEGATE .  (25)
+
+	.  reduce 25
+
+
+state 16
+	EXPR_BIT_AND : EXPR_SHIFT .  (17)
+	EXPR_SHIFT : EXPR_SHIFT . LSHIFT EXPR_ADD_SUB  (20)
+	EXPR_SHIFT : EXPR_SHIFT . RSHIFT EXPR_ADD_SUB  (21)
+
+	LSHIFT  shift 35
+	RSHIFT  shift 36
+	';'  reduce 17
+	'|'  reduce 17
+	'^'  reduce 17
+	'&'  reduce 17
+	')'  reduce 17
+
+
+state 17
+	EXPR_BIT_XOR : EXPR_BIT_AND .  (15)
+	EXPR_BIT_AND : EXPR_BIT_AND . '&' EXPR_SHIFT  (18)
+
+	'&'  shift 37
+	';'  reduce 15
+	'|'  reduce 15
+	'^'  reduce 15
+	')'  reduce 15
+
+
+state 18
+	EXPR_BIT_OR : EXPR_BIT_XOR .  (13)
+	EXPR_BIT_XOR : EXPR_BIT_XOR . '^' EXPR_BIT_AND  (16)
+
+	'^'  shift 38
+	';'  reduce 13
+	'|'  reduce 13
+	')'  reduce 13
+
+
+state 19
+	EXPR_ASSIGN_SIMPLE : EXPR_BIT_OR .  (11)
+	EXPR_BIT_OR : EXPR_BIT_OR . '|' EXPR_BIT_XOR  (14)
+
+	'|'  shift 39
+	';'  reduce 11
+	')'  reduce 11
+
+
+state 20
+	EXPR_BIT_NOT : EXPR_PARENS .  (31)
+
+	.  reduce 31
+
+
+state 21
+	commands : command . ';'  (1)
+
+	';'  shift 40
+	.  error
+
+
+state 22
+	EXPR_ASSIGN : VAR ASSIGN . EXPR_ADD_SUB  (9)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 41
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_PARENS  goto 20
+
+
+state 23
+	EXPR_ASSIGN_SIMPLE : VAR '=' . EXPR_BIT_NOT  (12)
+
+	NUM  shift 1
+	VAR  shift 24
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_BIT_NOT  goto 42
+	EXPR_PARENS  goto 20
+
+
+state 24
+	EXPR_PARENS : VAR .  (34)
+
+	.  reduce 34
+
+
+state 25
+	EXPR_NEGATE : '-' EXPR_BIT_NOT .  (30)
+
+	.  reduce 30
+
+
+state 26
+	EXPR_BIT_NOT : '~' EXPR_PARENS .  (32)
+
+	.  reduce 32
+
+
+state 27
+	EXPR_ASSIGN : VAR . ASSIGN EXPR_ADD_SUB  (9)
+	EXPR_ASSIGN_SIMPLE : VAR . '=' EXPR_BIT_NOT  (12)
+	EXPR_PARENS : VAR .  (34)
+
+	ASSIGN  shift 22
+	'='  shift 23
+	LSHIFT  reduce 34
+	RSHIFT  reduce 34
+	'|'  reduce 34
+	'^'  reduce 34
+	'&'  reduce 34
+	'+'  reduce 34
+	'-'  reduce 34
+	'*'  reduce 34
+	'/'  reduce 34
+	'%'  reduce 34
+	')'  reduce 34
+
+
+state 28
+	EXPR_PARENS : '(' EXPR . ')'  (33)
+
+	')'  shift 43
+	.  error
+
+
+state 29
+	commands : commands command . ';'  (2)
+
+	';'  shift 44
+	.  error
+
+
+state 30
+	EXPR_ADD_SUB : EXPR_ADD_SUB '+' . EXPR_MULT_DIV  (23)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_MULT_DIV  goto 45
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_PARENS  goto 20
+
+
+state 31
+	EXPR_ADD_SUB : EXPR_ADD_SUB '-' . EXPR_MULT_DIV  (24)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_MULT_DIV  goto 46
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_PARENS  goto 20
+
+
+state 32
+	EXPR_MULT_DIV : EXPR_MULT_DIV '*' . EXPR_NEGATE  (26)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 47
+	EXPR_PARENS  goto 20
+
+
+state 33
+	EXPR_MULT_DIV : EXPR_MULT_DIV '/' . EXPR_NEGATE  (27)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 48
+	EXPR_PARENS  goto 20
+
+
+state 34
+	EXPR_MULT_DIV : EXPR_MULT_DIV '%' . EXPR_NEGATE  (28)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 49
+	EXPR_PARENS  goto 20
+
+
+state 35
+	EXPR_SHIFT : EXPR_SHIFT LSHIFT . EXPR_ADD_SUB  (20)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 50
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_PARENS  goto 20
+
+
+state 36
+	EXPR_SHIFT : EXPR_SHIFT RSHIFT . EXPR_ADD_SUB  (21)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 51
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_PARENS  goto 20
+
+
+state 37
+	EXPR_BIT_AND : EXPR_BIT_AND '&' . EXPR_SHIFT  (18)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 52
+	EXPR_PARENS  goto 20
+
+
+state 38
+	EXPR_BIT_XOR : EXPR_BIT_XOR '^' . EXPR_BIT_AND  (16)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 16
+	EXPR_BIT_AND  goto 53
+	EXPR_PARENS  goto 20
+
+
+state 39
+	EXPR_BIT_OR : EXPR_BIT_OR '|' . EXPR_BIT_XOR  (14)
+
+	NUM  shift 1
+	VAR  shift 24
+	'-'  shift 5
+	'~'  shift 6
+	'('  shift 7
+	.  error
+
+	EXPR_ADD_SUB  goto 10
+	EXPR_MULT_DIV  goto 11
+	EXPR_BIT_NOT  goto 14
+	EXPR_NEGATE  goto 15
+	EXPR_SHIFT  goto 16
+	EXPR_BIT_AND  goto 17
+	EXPR_BIT_XOR  goto 54
+	EXPR_PARENS  goto 20
+
+
+state 40
+	commands : command ';' .  (1)
+
+	.  reduce 1
+
+
+state 41
+	EXPR_ASSIGN : VAR ASSIGN EXPR_ADD_SUB .  (9)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '+' EXPR_MULT_DIV  (23)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '-' EXPR_MULT_DIV  (24)
+
+	'+'  shift 30
+	'-'  shift 31
+	';'  reduce 9
+	')'  reduce 9
+
+
+state 42
+	EXPR_ASSIGN_SIMPLE : VAR '=' EXPR_BIT_NOT .  (12)
+
+	.  reduce 12
+
+
+state 43
+	EXPR_PARENS : '(' EXPR ')' .  (33)
+
+	.  reduce 33
+
+
+state 44
+	commands : commands command ';' .  (2)
+
+	.  reduce 2
+
+
+state 45
+	EXPR_ADD_SUB : EXPR_ADD_SUB '+' EXPR_MULT_DIV .  (23)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '*' EXPR_NEGATE  (26)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '/' EXPR_NEGATE  (27)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '%' EXPR_NEGATE  (28)
+
+	'*'  shift 32
+	'/'  shift 33
+	'%'  shift 34
+	LSHIFT  reduce 23
+	RSHIFT  reduce 23
+	';'  reduce 23
+	'|'  reduce 23
+	'^'  reduce 23
+	'&'  reduce 23
+	'+'  reduce 23
+	'-'  reduce 23
+	')'  reduce 23
+
+
+state 46
+	EXPR_ADD_SUB : EXPR_ADD_SUB '-' EXPR_MULT_DIV .  (24)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '*' EXPR_NEGATE  (26)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '/' EXPR_NEGATE  (27)
+	EXPR_MULT_DIV : EXPR_MULT_DIV . '%' EXPR_NEGATE  (28)
+
+	'*'  shift 32
+	'/'  shift 33
+	'%'  shift 34
+	LSHIFT  reduce 24
+	RSHIFT  reduce 24
+	';'  reduce 24
+	'|'  reduce 24
+	'^'  reduce 24
+	'&'  reduce 24
+	'+'  reduce 24
+	'-'  reduce 24
+	')'  reduce 24
+
+
+state 47
+	EXPR_MULT_DIV : EXPR_MULT_DIV '*' EXPR_NEGATE .  (26)
+
+	.  reduce 26
+
+
+state 48
+	EXPR_MULT_DIV : EXPR_MULT_DIV '/' EXPR_NEGATE .  (27)
+
+	.  reduce 27
+
+
+state 49
+	EXPR_MULT_DIV : EXPR_MULT_DIV '%' EXPR_NEGATE .  (28)
+
+	.  reduce 28
+
+
+state 50
+	EXPR_SHIFT : EXPR_SHIFT LSHIFT EXPR_ADD_SUB .  (20)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '+' EXPR_MULT_DIV  (23)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '-' EXPR_MULT_DIV  (24)
+
+	'+'  shift 30
+	'-'  shift 31
+	LSHIFT  reduce 20
+	RSHIFT  reduce 20
+	';'  reduce 20
+	'|'  reduce 20
+	'^'  reduce 20
+	'&'  reduce 20
+	')'  reduce 20
+
+
+state 51
+	EXPR_SHIFT : EXPR_SHIFT RSHIFT EXPR_ADD_SUB .  (21)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '+' EXPR_MULT_DIV  (23)
+	EXPR_ADD_SUB : EXPR_ADD_SUB . '-' EXPR_MULT_DIV  (24)
+
+	'+'  shift 30
+	'-'  shift 31
+	LSHIFT  reduce 21
+	RSHIFT  reduce 21
+	';'  reduce 21
+	'|'  reduce 21
+	'^'  reduce 21
+	'&'  reduce 21
+	')'  reduce 21
+
+
+state 52
+	EXPR_BIT_AND : EXPR_BIT_AND '&' EXPR_SHIFT .  (18)
+	EXPR_SHIFT : EXPR_SHIFT . LSHIFT EXPR_ADD_SUB  (20)
+	EXPR_SHIFT : EXPR_SHIFT . RSHIFT EXPR_ADD_SUB  (21)
+
+	LSHIFT  shift 35
+	RSHIFT  shift 36
+	';'  reduce 18
+	'|'  reduce 18
+	'^'  reduce 18
+	'&'  reduce 18
+	')'  reduce 18
+
+
+state 53
+	EXPR_BIT_XOR : EXPR_BIT_XOR '^' EXPR_BIT_AND .  (16)
+	EXPR_BIT_AND : EXPR_BIT_AND . '&' EXPR_SHIFT  (18)
+
+	'&'  shift 37
+	';'  reduce 16
+	'|'  reduce 16
+	'^'  reduce 16
+	')'  reduce 16
+
+
+state 54
+	EXPR_BIT_OR : EXPR_BIT_OR '|' EXPR_BIT_XOR .  (14)
+	EXPR_BIT_XOR : EXPR_BIT_XOR . '^' EXPR_BIT_AND  (16)
+
+	'^'  shift 38
+	';'  reduce 14
+	'|'  reduce 14
+	')'  reduce 14
+
+
+Rules never reduced:
+	EXPR_ASSIGN_LOOP : EXPR_ASSIGN_LOOP '=' VAR  (10)
+
+
+State 2 contains 1 reduce/reduce conflict.
+
+
+22 terminals, 16 nonterminals
+36 grammar rules, 55 states
