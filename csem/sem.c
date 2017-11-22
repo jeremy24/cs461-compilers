@@ -40,8 +40,9 @@ int nextbr() { return ++_currbranch; }
 
 char char_type( int type )
 {
-	if ( (type & T_INT)    == T_INT    ) return 'i';
-	if ( (type & T_DOUBLE) == T_DOUBLE ) return 'f';
+	if ( (type & T_INT)		== T_INT    ) return 'i';
+	if ( (type & T_DOUBLE)	== T_DOUBLE ) return 'f';
+	if ( (type & T_STR )	== T_STR	) return 's';
 	return '?';
 }
 
@@ -49,6 +50,7 @@ int int_type ( int type )
 {
 	if ( (type & T_INT)    == T_INT    ) return T_INT;
 	if ( (type & T_DOUBLE) == T_DOUBLE ) return T_DOUBLE;
+	if ( (type & T_STR )    == T_STR    ) return T_STR;
 	return -1;
 }
 
@@ -134,12 +136,47 @@ struct sem_rec *call(char *f, struct sem_rec *args)
 	//fprintf(stderr, "sem: call not implemented\n");
 	struct id_entry * p = lookup(f, 0);
 	
+	int type = T_INT;
 
-	printf("t%d := global %s\n", nexttemp(), f); 
+	if ( p  == NULL )
+	{
+		fprintf(stderr, "Unknown function: %s\n", f);
+	} else 
+	{
+		type = char_type(p->i_type);
+	}
+	
+
+	int head = args ->s_place;
+	//fprintf(stderr, "List head: %d\n", args->s_place);
+	int i = 0;
+
+	struct sem_rec * prev;
+	args ->s_false = NULL;
+
+	while ( 1 )
+	{
+		//printf("argi t%d\n", args->s_place);
+		prev = args;
+		if ( args ->back.s_link == NULL ) break;
+		args = args -> back.s_link;
+		args ->s_false = prev;
+	}
+
+	while ( 1 )
+	{
+		++i;
+		printf("arg%c t%d\n", int_type(args->s_mode) == T_DOUBLE ? 'f' : 'i', args->s_place);
+		if ( args ->s_false == NULL ) break;
+		args = args ->s_false;
+	}
+
+	printf("t%d := global %s\n", nexttemp(), f);
+	int call_label = currtemp();
+	printf("t%d := f%c t%d %d\n", nexttemp(), char_type(type), call_label, i);
 	//printf("fi 
-	return node(currtemp(), args->s_mode, NULL, NULL);
 
-	return ((struct sem_rec *) NULL);
+	return node(currtemp(), type, NULL, NULL);
 }
 
 /*
@@ -321,8 +358,18 @@ struct sem_rec *exprs(struct sem_rec *l, struct sem_rec *e)
 {
 	
 	
-	fprintf(stderr, "sem: exprs not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: exprs not implemented\n");
+	//fprintf(stderr, "l: %d  e: %d\n", l->s_place, e->s_place);
+
+	fprintf(stderr, "%d -> %d\n", e->s_place, l->s_place);	
+	e -> back.s_link = l;
+	//if ( l -> back.s_link != NULL )
+	//	l -> back.s_link = NULL;
+
+	//printf("argi t%d\n", l->s_place);
+	//printf("argi t%d\n", e->s_place);
+	
+	return e;//((struct sem_rec *) NULL);
 }
 
 /*
