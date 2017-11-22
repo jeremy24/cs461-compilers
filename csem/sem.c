@@ -1,4 +1,4 @@
-# include <stdio.h>
+#include <stdio.h>
 # include <stdlib.h>
 # include <assert.h>
 
@@ -52,6 +52,18 @@ int int_type ( int type )
 	return -1;
 }
 
+int are_diff( struct sem_rec * x, struct sem_rec * y )
+{
+	int xm = x->s_mode;
+	int ym = y->s_mode;
+
+	//printf("are diff: %d  %d\n", xm, ym);
+
+	if ( (xm & ym & T_INT) == T_INT ) return 0;
+	if ( (xm & ym &T_DOUBLE) == T_DOUBLE) return 0;
+	return 1;	
+}
+
 
 //static void print_id_entry( struct id_entry * );
 //static void print_scope(int);
@@ -63,7 +75,7 @@ int int_type ( int type )
 
 struct sem_rec * conv_to_int( struct sem_rec * x )
 {
-	if ( x -> s_mode == T_DOUBLE )
+	if ( ( x -> s_mode & T_INT ) != T_INT )
 	{
 		printf("t%d := cvi t%d\n", nexttemp(), x->s_place);
 		return node(currtemp(), T_INT, NULL, NULL);
@@ -73,7 +85,7 @@ struct sem_rec * conv_to_int( struct sem_rec * x )
 
 struct sem_rec * conv_to_float( struct sem_rec * x )
 {
-	if ( x -> s_mode == T_INT )
+	if ( ( x -> s_mode & T_DOUBLE ) != T_DOUBLE )
 	{
 		printf("t%d := cvf t%d\n", nexttemp(), x->s_place);
 		return node(currtemp(), T_DOUBLE, NULL, NULL);
@@ -119,7 +131,14 @@ void bgnstmt()
  */
 struct sem_rec *call(char *f, struct sem_rec *args)
 {
-	fprintf(stderr, "sem: call not implemented\n");
+	//fprintf(stderr, "sem: call not implemented\n");
+	struct id_entry * p = lookup(f, 0);
+	
+
+	printf("t%d := global %s\n", nexttemp(), f); 
+	//printf("fi 
+	return node(currtemp(), args->s_mode, NULL, NULL);
+
 	return ((struct sem_rec *) NULL);
 }
 
@@ -265,7 +284,7 @@ void doret(struct sem_rec *e)
 	}
 
 	// fprintf(stderr, "sem: doret not implemented\n");
-	switch ( functype )
+	switch ( int_type(functype) )
 	{
 		case T_DOUBLE:
 			printf("retf t%d\n", loc);
@@ -300,6 +319,8 @@ void endloopscope(int m)
  */
 struct sem_rec *exprs(struct sem_rec *l, struct sem_rec *e)
 {
+	
+	
 	fprintf(stderr, "sem: exprs not implemented\n");
 	return ((struct sem_rec *) NULL);
 }
@@ -410,7 +431,7 @@ struct sem_rec *id(char *x)
 
 	//fprintf(stderr, "Made Rec: place = %d\n", rec -> s_place);
 
-	return node(currtemp(), type, NULL, NULL);// node(currtemp(), p->i_type, NULL, NULL);
+	return node(currtemp(), type | T_ADDR, NULL, NULL);// node(currtemp(), p->i_type, NULL, NULL);
 }
 
 
@@ -522,7 +543,7 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: rel not implemented\n");
 
-	int diff = x->s_mode != y->s_mode;
+	int diff = are_diff(x, y); //x->s_mode & y->s_mode != x->s_mode;
 
 	if ( diff )
 	{
@@ -549,7 +570,7 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 	//char type = x->s_mode==T_INT?'i':'f';
 	//char type1 = y->s_mode==T_INT?'i':'f';
 
-	if ( x->s_mode != y->s_mode )
+	if ( are_diff(x,y) )
 	{
 		x = conv_to_float(x);
 		y = conv_to_float(y);
@@ -575,8 +596,12 @@ void startloopscope()
  */
 struct sem_rec *string(char *s)
 {
-	fprintf(stderr, "sem: string not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: string not implemented\n");
+	
+	printf("t%d := %s\n", nexttemp(), s);
+	return node(currtemp(), T_STR, NULL, NULL);
+
+	//return ((struct sem_rec *) NULL);
 }
 
 /*
