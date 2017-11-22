@@ -1,16 +1,8 @@
 
 
-int b;
 
 
-double scale(double x) {
-	int i;
-
-	double t;	
-	return b;
-}
-
-int add( int x, int y)
+int add( int x, double y)
 {
-	return x;
+	return x + y;
 }

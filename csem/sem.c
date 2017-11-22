@@ -345,7 +345,14 @@ struct sem_rec *id(char *x)
 		fprintf(stderr, "Variable %s already declared\n", x);
 	} else {
 		char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
-		printf("t%d := %s %s\n", nexttemp(), scope, p->i_name);
+		
+		char * name = p->i_name;
+		if ( p-> i_scope == PARAM )
+		{
+			name = "PARAM FIX";
+		}
+
+		printf("t%d := %s %s\n", nexttemp(), scope, name);
 		rec = node(currtemp(), p->i_type, NULL, NULL); 
 		rec -> s_place = currtemp();
 	}
@@ -403,8 +410,6 @@ struct sem_rec *op1(char *op, struct sem_rec *y)
 	//fprintf(stderr, "sem: op1 not implemented\n");
 	//fprintf(stderr, "op1: %s  place: %d\n", op, y->s_place);	
 
-
-
 	printf("t%d := %s%c t%d\n", nexttemp(), op, y->s_mode == T_INT ? 'i' : 'f', y->s_place);
 
 	return node(currtemp(), y->s_mode, NULL, NULL);
@@ -415,8 +420,26 @@ struct sem_rec *op1(char *op, struct sem_rec *y)
  */
 struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
 {
-	fprintf(stderr, "sem: op2 not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: op2 not implemented\n");
+	
+	int diff=0;
+
+	if ( x->s_mode != y->s_mode ) diff = 1;
+
+	if ( diff && x->s_mode == T_INT )
+	{
+		printf("t%d := cvf t%d\n", nexttemp(), x->s_place);
+		x = node(currtemp(), T_DOUBLE, NULL,NULL);
+	} else if ( diff && y->s_mode == T_INT )
+	{
+		printf("t%d := cvf t%d\n", nexttemp(), y->s_place);
+		y = node(currtemp(), T_DOUBLE, NULL, NULL);
+	}
+
+	printf("t%d := t%d %s%c t%d\n", 
+			nexttemp(), x->s_place, op, x->s_mode==T_INT?'i':'f', y->s_place);
+
+	return node(currtemp(), x->s_mode, NULL, NULL);
 }
 
 /*
