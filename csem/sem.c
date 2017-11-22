@@ -367,9 +367,10 @@ struct sem_rec *id(char *x)
 	// formaltypes -> chars
 	// formalnum -> int num of them
 
-	struct sem_rec * rec = NULL;
+	//struct sem_rec * rec = NULL;
 
 	struct id_entry * p;
+	int type;
 
 	if ((p = lookup(x, 0)) == NULL) {
 		/*
@@ -393,13 +394,28 @@ struct sem_rec *id(char *x)
 	{
 		//fprintf(stderr, "Variable already declared: %s\n", x);
 		//printf("Offset: %d\n", p->i_offset);
-		 char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
-		 printf("t%d := %s %d\n", nexttemp(), scope, p->i_offset);
+		//char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
+		
+		if ( p->i_scope == LOCAL )
+		{
+			printf("t%d := local %d\n", nexttemp(), p->i_offset);
+			type = localtypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT; //p->i_type;//localtypes[p->i_offset];
+		} else if ( p->i_scope == GLOBAL )
+		{
+			printf("t%d := global %s\n", nexttemp(), p->i_name);
+			type = p->i_type;
+		} else
+		{
+			printf("t%d := param %d\n", nexttemp(), p->i_offset);
+			type = formaltypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT;
+			//type = p->i_type;//type = formaltypes[p->i_offset];
+		}
+
 	}
 
 	//fprintf(stderr, "Made Rec: place = %d\n", rec -> s_place);
 
-	return node(currtemp(), p->i_type, NULL, NULL);// node(currtemp(), p->i_type, NULL, NULL);
+	return node(currtemp(), type, NULL, NULL);// node(currtemp(), p->i_type, NULL, NULL);
 }
 
 
@@ -411,8 +427,18 @@ struct sem_rec *id(char *x)
  */
 struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 {
-	fprintf(stderr, "sem: indx not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: indx not implemented\n");
+	//fprintf(stderr, "%d  %d\n", x->s_place, i->s_place	
+	
+	//printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
+	
+	printf("t%d := t%d []%c t%d\n", 
+			nexttemp(), x->s_place, x->s_mode==T_INT?'i':'f', i->s_place);
+
+
+	return node(currtemp(), x->s_mode, NULL, NULL);
+
+	//return ((struct sem_rec *) NULL);
 }
 
 /*
@@ -525,11 +551,24 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: set not implemented\n");
 	
-	char type = x->s_mode==T_INT?'i':'f';
+	//char type = x->s_mode==T_INT?'i':'f';
+	//char type1 = y->s_mode==T_INT?'i':'f';
 
-	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, type, y->s_place);
+	//printf("%c %c\n", type, type1);
+	//printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, type, y->s_place);
 
-	return ((struct sem_rec *) NULL);
+
+	if ( x->s_mode != y->s_mode )
+	{
+		x = conv_to_float(x);
+		y = conv_to_float(y);
+	}
+
+	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, x->s_mode==T_INT?'i':'f', y->s_place);
+
+	return node(currtemp(), x->s_mode, NULL, NULL);
+
+	//return ((struct sem_rec *) NULL);
 }
 
 /*
