@@ -1,0 +1,12 @@
+void dump(int, FILE *);
+void new_block();
+void exit_block();
+void enterblock();
+struct id_entry *install(char *, int);
+void leaveblock();
+struct id_entry *lookup(char *, int);
+void sdump(FILE *);
+char *slookup(char []);
+int hash(char *);
+char *alloc(unsigned);
+void save_rec(struct sem_rec *);

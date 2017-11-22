@@ -1,0 +1,3270 @@
+   0  $accept : prog $end
+
+   1  prog : externs
+
+   2  externs :
+   3          | externs extern
+
+   4  extern : dcl ';'
+   5         | func
+
+   6  dcls :
+   7       | dcls dcl ';'
+
+   8  dcl : type dclr
+   9      | dcl ',' dclr
+
+  10  dclr : ID
+  11       | ID '[' ']'
+  12       | ID '[' CON ']'
+
+  13  type : CHAR
+  14       | FLOAT
+  15       | DOUBLE
+  16       | INT
+
+  17  func : fhead stmts '}'
+
+  18  fhead : fname fargs '{' dcls
+
+  19  fname : type ID
+  20        | ID
+
+  21  fargs : '(' ')'
+  22        | '(' args ')'
+
+  23  args : type dclr
+  24       | args ',' type dclr
+
+  25  s :
+
+  26  m :
+
+  27  n :
+
+  28  block : '{' stmts '}'
+
+  29  stmts :
+  30        | stmts lblstmt
+
+  31  lblstmt : b stmt
+  32          | b labels stmt
+
+  33  labels : ID ':'
+  34         | labels ID ':'
+
+  35  b :
+
+  36  stmt : expr ';'
+  37       | IF '(' cexpr ')' m lblstmt m
+  38       | IF '(' cexpr ')' m lblstmt ELSE n m lblstmt m
+  39       | WHILE '(' m cexpr ')' m s lblstmt n m
+  40       | DO m s lblstmt WHILE '(' m cexpr ')' ';' m
+  41       | FOR '(' expro ';' m cexpro ';' m expro n ')' m s lblstmt n m
+  42       | CONTINUE ';'
+  43       | BREAK ';'
+  44       | GOTO ID ';'
+  45       | RETURN ';'
+  46       | RETURN expr ';'
+  47       | block
+  48       | ';'
+
+  49  cexpro :
+  50         | cexpr
+
+  51  cexpr : expr EQ expr
+  52        | expr NE expr
+  53        | expr LE expr
+  54        | expr GE expr
+  55        | expr LT expr
+  56        | expr GT expr
+  57        | cexpr AND m cexpr
+  58        | cexpr OR m cexpr
+  59        | NOT cexpr
+  60        | expr
+
+  61  exprs : expr
+  62        | exprs ',' expr
+
+  63  expro :
+  64        | expr
+
+  65  expr : lval SET expr
+  66       | lval SETOR expr
+  67       | lval SETXOR expr
+  68       | lval SETAND expr
+  69       | lval SETLSH expr
+  70       | lval SETRSH expr
+  71       | lval SETADD expr
+  72       | lval SETSUB expr
+  73       | lval SETMUL expr
+  74       | lval SETDIV expr
+  75       | lval SETMOD expr
+  76       | expr BITOR expr
+  77       | expr BITXOR expr
+  78       | expr BITAND expr
+  79       | expr LSH expr
+  80       | expr RSH expr
+  81       | expr ADD expr
+  82       | expr SUB expr
+  83       | expr MUL expr
+  84       | expr DIV expr
+  85       | expr MOD expr
+  86       | BITAND lval
+  87       | SUB expr
+  88       | COM expr
+  89       | lval
+  90       | ID '(' ')'
+  91       | ID '(' exprs ')'
+  92       | '(' expr ')'
+  93       | CON
+  94       | STR
+
+  95  lval : ID
+  96       | ID '[' expr ']'
+
+state 0
+	$accept : . prog $end  (0)
+	externs : .  (2)
+
+	.  reduce 2
+
+	prog  goto 1
+	externs  goto 2
+
+
+state 1
+	$accept : prog . $end  (0)
+
+	$end  accept
+
+
+state 2
+	prog : externs .  (1)
+	externs : externs . extern  (3)
+
+	ID  shift 3
+	CHAR  shift 4
+	FLOAT  shift 5
+	DOUBLE  shift 6
+	INT  shift 7
+	$end  reduce 1
+
+	dcl  goto 8
+	fname  goto 9
+	type  goto 10
+	extern  goto 11
+	func  goto 12
+	fhead  goto 13
+
+
+state 3
+	fname : ID .  (20)
+
+	.  reduce 20
+
+
+state 4
+	type : CHAR .  (13)
+
+	.  reduce 13
+
+
+state 5
+	type : FLOAT .  (14)
+
+	.  reduce 14
+
+
+state 6
+	type : DOUBLE .  (15)
+
+	.  reduce 15
+
+
+state 7
+	type : INT .  (16)
+
+	.  reduce 16
+
+
+state 8
+	extern : dcl . ';'  (4)
+	dcl : dcl . ',' dclr  (9)
+
+	';'  shift 14
+	','  shift 15
+	.  error
+
+
+state 9
+	fhead : fname . fargs '{' dcls  (18)
+
+	'('  shift 16
+	.  error
+
+	fargs  goto 17
+
+
+state 10
+	dcl : type . dclr  (8)
+	fname : type . ID  (19)
+
+	ID  shift 18
+	.  error
+
+	dclr  goto 19
+
+
+state 11
+	externs : externs extern .  (3)
+
+	.  reduce 3
+
+
+state 12
+	extern : func .  (5)
+
+	.  reduce 5
+
+
+state 13
+	func : fhead . stmts '}'  (17)
+	stmts : .  (29)
+
+	.  reduce 29
+
+	stmts  goto 20
+
+
+state 14
+	extern : dcl ';' .  (4)
+
+	.  reduce 4
+
+
+state 15
+	dcl : dcl ',' . dclr  (9)
+
+	ID  shift 21
+	.  error
+
+	dclr  goto 22
+
+
+state 16
+	fargs : '(' . ')'  (21)
+	fargs : '(' . args ')'  (22)
+
+	CHAR  shift 4
+	FLOAT  shift 5
+	DOUBLE  shift 6
+	INT  shift 7
+	')'  shift 23
+	.  error
+
+	type  goto 24
+	args  goto 25
+
+
+state 17
+	fhead : fname fargs . '{' dcls  (18)
+
+	'{'  shift 26
+	.  error
+
+
+state 18
+	dclr : ID .  (10)
+	dclr : ID . '[' ']'  (11)
+	dclr : ID . '[' CON ']'  (12)
+	fname : type ID .  (19)
+
+	'['  shift 27
+	';'  reduce 10
+	','  reduce 10
+	'('  reduce 19
+
+
+state 19
+	dcl : type dclr .  (8)
+
+	.  reduce 8
+
+
+state 20
+	func : fhead stmts . '}'  (17)
+	stmts : stmts . lblstmt  (30)
+	b : .  (35)
+
+	'}'  shift 28
+	ID  reduce 35
+	CON  reduce 35
+	STR  reduce 35
+	FOR  reduce 35
+	IF  reduce 35
+	RETURN  reduce 35
+	WHILE  reduce 35
+	DO  reduce 35
+	CONTINUE  reduce 35
+	BREAK  reduce 35
+	GOTO  reduce 35
+	BITAND  reduce 35
+	SUB  reduce 35
+	COM  reduce 35
+	';'  reduce 35
+	'{'  reduce 35
+	'('  reduce 35
+
+	lblstmt  goto 29
+	b  goto 30
+
+
+state 21
+	dclr : ID .  (10)
+	dclr : ID . '[' ']'  (11)
+	dclr : ID . '[' CON ']'  (12)
+
+	'['  shift 27
+	';'  reduce 10
+	','  reduce 10
+	')'  reduce 10
+
+
+state 22
+	dcl : dcl ',' dclr .  (9)
+
+	.  reduce 9
+
+
+state 23
+	fargs : '(' ')' .  (21)
+
+	.  reduce 21
+
+
+state 24
+	args : type . dclr  (23)
+
+	ID  shift 21
+	.  error
+
+	dclr  goto 31
+
+
+state 25
+	fargs : '(' args . ')'  (22)
+	args : args . ',' type dclr  (24)
+
+	','  shift 32
+	')'  shift 33
+	.  error
+
+
+state 26
+	fhead : fname fargs '{' . dcls  (18)
+	dcls : .  (6)
+
+	.  reduce 6
+
+	dcls  goto 34
+
+
+state 27
+	dclr : ID '[' . ']'  (11)
+	dclr : ID '[' . CON ']'  (12)
+
+	CON  shift 35
+	']'  shift 36
+	.  error
+
+
+state 28
+	func : fhead stmts '}' .  (17)
+
+	.  reduce 17
+
+
+state 29
+	stmts : stmts lblstmt .  (30)
+
+	.  reduce 30
+
+
+state 30
+	lblstmt : b . stmt  (31)
+	lblstmt : b . labels stmt  (32)
+
+	ID  shift 37
+	CON  shift 38
+	STR  shift 39
+	FOR  shift 40
+	IF  shift 41
+	RETURN  shift 42
+	WHILE  shift 43
+	DO  shift 44
+	CONTINUE  shift 45
+	BREAK  shift 46
+	GOTO  shift 47
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	';'  shift 51
+	'{'  shift 52
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 55
+	block  goto 56
+	stmt  goto 57
+	labels  goto 58
+
+
+state 31
+	args : type dclr .  (23)
+
+	.  reduce 23
+
+
+state 32
+	args : args ',' . type dclr  (24)
+
+	CHAR  shift 4
+	FLOAT  shift 5
+	DOUBLE  shift 6
+	INT  shift 7
+	.  error
+
+	type  goto 59
+
+
+state 33
+	fargs : '(' args ')' .  (22)
+
+	.  reduce 22
+
+
+state 34
+	dcls : dcls . dcl ';'  (7)
+	fhead : fname fargs '{' dcls .  (18)
+
+	CHAR  shift 4
+	FLOAT  shift 5
+	DOUBLE  shift 6
+	INT  shift 7
+	ID  reduce 18
+	CON  reduce 18
+	STR  reduce 18
+	FOR  reduce 18
+	IF  reduce 18
+	RETURN  reduce 18
+	WHILE  reduce 18
+	DO  reduce 18
+	CONTINUE  reduce 18
+	BREAK  reduce 18
+	GOTO  reduce 18
+	BITAND  reduce 18
+	SUB  reduce 18
+	COM  reduce 18
+	';'  reduce 18
+	'}'  reduce 18
+	'{'  reduce 18
+	'('  reduce 18
+
+	dcl  goto 60
+	type  goto 61
+
+
+state 35
+	dclr : ID '[' CON . ']'  (12)
+
+	']'  shift 62
+	.  error
+
+
+state 36
+	dclr : ID '[' ']' .  (11)
+
+	.  reduce 11
+
+
+state 37
+	labels : ID . ':'  (33)
+	expr : ID . '(' ')'  (90)
+	expr : ID . '(' exprs ')'  (91)
+	lval : ID .  (95)
+	lval : ID . '[' expr ']'  (96)
+
+	'['  shift 63
+	'('  shift 64
+	':'  shift 65
+	SET  reduce 95
+	SETOR  reduce 95
+	SETXOR  reduce 95
+	SETAND  reduce 95
+	SETLSH  reduce 95
+	SETRSH  reduce 95
+	SETADD  reduce 95
+	SETSUB  reduce 95
+	SETMUL  reduce 95
+	SETDIV  reduce 95
+	SETMOD  reduce 95
+	BITOR  reduce 95
+	BITXOR  reduce 95
+	BITAND  reduce 95
+	LSH  reduce 95
+	RSH  reduce 95
+	ADD  reduce 95
+	SUB  reduce 95
+	MUL  reduce 95
+	DIV  reduce 95
+	MOD  reduce 95
+	';'  reduce 95
+
+
+state 38
+	expr : CON .  (93)
+
+	.  reduce 93
+
+
+state 39
+	expr : STR .  (94)
+
+	.  reduce 94
+
+
+state 40
+	stmt : FOR . '(' expro ';' m cexpro ';' m expro n ')' m s lblstmt n m  (41)
+
+	'('  shift 66
+	.  error
+
+
+state 41
+	stmt : IF . '(' cexpr ')' m lblstmt m  (37)
+	stmt : IF . '(' cexpr ')' m lblstmt ELSE n m lblstmt m  (38)
+
+	'('  shift 67
+	.  error
+
+
+state 42
+	stmt : RETURN . ';'  (45)
+	stmt : RETURN . expr ';'  (46)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	';'  shift 69
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 70
+
+
+state 43
+	stmt : WHILE . '(' m cexpr ')' m s lblstmt n m  (39)
+
+	'('  shift 71
+	.  error
+
+
+state 44
+	stmt : DO . m s lblstmt WHILE '(' m cexpr ')' ';' m  (40)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 72
+
+
+state 45
+	stmt : CONTINUE . ';'  (42)
+
+	';'  shift 73
+	.  error
+
+
+state 46
+	stmt : BREAK . ';'  (43)
+
+	';'  shift 74
+	.  error
+
+
+state 47
+	stmt : GOTO . ID ';'  (44)
+
+	ID  shift 75
+	.  error
+
+
+state 48
+	expr : BITAND . lval  (86)
+
+	ID  shift 76
+	.  error
+
+	lval  goto 77
+
+
+state 49
+	expr : SUB . expr  (87)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 78
+
+
+state 50
+	expr : COM . expr  (88)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 79
+
+
+state 51
+	stmt : ';' .  (48)
+
+	.  reduce 48
+
+
+state 52
+	block : '{' . stmts '}'  (28)
+	stmts : .  (29)
+
+	.  reduce 29
+
+	stmts  goto 80
+
+
+state 53
+	expr : '(' . expr ')'  (92)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 81
+
+
+state 54
+	expr : lval . SET expr  (65)
+	expr : lval . SETOR expr  (66)
+	expr : lval . SETXOR expr  (67)
+	expr : lval . SETAND expr  (68)
+	expr : lval . SETLSH expr  (69)
+	expr : lval . SETRSH expr  (70)
+	expr : lval . SETADD expr  (71)
+	expr : lval . SETSUB expr  (72)
+	expr : lval . SETMUL expr  (73)
+	expr : lval . SETDIV expr  (74)
+	expr : lval . SETMOD expr  (75)
+	expr : lval .  (89)
+
+	SET  shift 82
+	SETOR  shift 83
+	SETXOR  shift 84
+	SETAND  shift 85
+	SETLSH  shift 86
+	SETRSH  shift 87
+	SETADD  shift 88
+	SETSUB  shift 89
+	SETMUL  shift 90
+	SETDIV  shift 91
+	SETMOD  shift 92
+	OR  reduce 89
+	AND  reduce 89
+	BITOR  reduce 89
+	BITXOR  reduce 89
+	BITAND  reduce 89
+	EQ  reduce 89
+	NE  reduce 89
+	GT  reduce 89
+	GE  reduce 89
+	LT  reduce 89
+	LE  reduce 89
+	LSH  reduce 89
+	RSH  reduce 89
+	ADD  reduce 89
+	SUB  reduce 89
+	MUL  reduce 89
+	DIV  reduce 89
+	MOD  reduce 89
+	';'  reduce 89
+	','  reduce 89
+	']'  reduce 89
+	')'  reduce 89
+
+
+state 55
+	stmt : expr . ';'  (36)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	';'  shift 103
+	.  error
+
+
+state 56
+	stmt : block .  (47)
+
+	.  reduce 47
+
+
+state 57
+	lblstmt : b stmt .  (31)
+
+	.  reduce 31
+
+
+state 58
+	lblstmt : b labels . stmt  (32)
+	labels : labels . ID ':'  (34)
+
+	ID  shift 104
+	CON  shift 38
+	STR  shift 39
+	FOR  shift 40
+	IF  shift 41
+	RETURN  shift 42
+	WHILE  shift 43
+	DO  shift 44
+	CONTINUE  shift 45
+	BREAK  shift 46
+	GOTO  shift 47
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	';'  shift 51
+	'{'  shift 52
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 55
+	block  goto 56
+	stmt  goto 105
+
+
+state 59
+	args : args ',' type . dclr  (24)
+
+	ID  shift 21
+	.  error
+
+	dclr  goto 106
+
+
+state 60
+	dcls : dcls dcl . ';'  (7)
+	dcl : dcl . ',' dclr  (9)
+
+	';'  shift 107
+	','  shift 15
+	.  error
+
+
+state 61
+	dcl : type . dclr  (8)
+
+	ID  shift 21
+	.  error
+
+	dclr  goto 19
+
+
+state 62
+	dclr : ID '[' CON ']' .  (12)
+
+	.  reduce 12
+
+
+state 63
+	lval : ID '[' . expr ']'  (96)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 108
+
+
+state 64
+	expr : ID '(' . ')'  (90)
+	expr : ID '(' . exprs ')'  (91)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	')'  shift 109
+	.  error
+
+	lval  goto 54
+	expr  goto 110
+	exprs  goto 111
+
+
+state 65
+	labels : ID ':' .  (33)
+
+	.  reduce 33
+
+
+state 66
+	stmt : FOR '(' . expro ';' m cexpro ';' m expro n ')' m s lblstmt n m  (41)
+	expro : .  (63)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	';'  reduce 63
+
+	lval  goto 54
+	expr  goto 112
+	expro  goto 113
+
+
+state 67
+	stmt : IF '(' . cexpr ')' m lblstmt m  (37)
+	stmt : IF '(' . cexpr ')' m lblstmt ELSE n m lblstmt m  (38)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 116
+
+
+state 68
+	expr : ID . '(' ')'  (90)
+	expr : ID . '(' exprs ')'  (91)
+	lval : ID .  (95)
+	lval : ID . '[' expr ']'  (96)
+
+	'['  shift 63
+	'('  shift 64
+	SET  reduce 95
+	SETOR  reduce 95
+	SETXOR  reduce 95
+	SETAND  reduce 95
+	SETLSH  reduce 95
+	SETRSH  reduce 95
+	SETADD  reduce 95
+	SETSUB  reduce 95
+	SETMUL  reduce 95
+	SETDIV  reduce 95
+	SETMOD  reduce 95
+	OR  reduce 95
+	AND  reduce 95
+	BITOR  reduce 95
+	BITXOR  reduce 95
+	BITAND  reduce 95
+	EQ  reduce 95
+	NE  reduce 95
+	GT  reduce 95
+	GE  reduce 95
+	LT  reduce 95
+	LE  reduce 95
+	LSH  reduce 95
+	RSH  reduce 95
+	ADD  reduce 95
+	SUB  reduce 95
+	MUL  reduce 95
+	DIV  reduce 95
+	MOD  reduce 95
+	';'  reduce 95
+	','  reduce 95
+	']'  reduce 95
+	')'  reduce 95
+
+
+state 69
+	stmt : RETURN ';' .  (45)
+
+	.  reduce 45
+
+
+state 70
+	stmt : RETURN expr . ';'  (46)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	';'  shift 117
+	.  error
+
+
+state 71
+	stmt : WHILE '(' . m cexpr ')' m s lblstmt n m  (39)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 118
+
+
+state 72
+	stmt : DO m . s lblstmt WHILE '(' m cexpr ')' ';' m  (40)
+	s : .  (25)
+
+	.  reduce 25
+
+	s  goto 119
+
+
+state 73
+	stmt : CONTINUE ';' .  (42)
+
+	.  reduce 42
+
+
+state 74
+	stmt : BREAK ';' .  (43)
+
+	.  reduce 43
+
+
+state 75
+	stmt : GOTO ID . ';'  (44)
+
+	';'  shift 120
+	.  error
+
+
+state 76
+	lval : ID .  (95)
+	lval : ID . '[' expr ']'  (96)
+
+	'['  shift 63
+	OR  reduce 95
+	AND  reduce 95
+	BITOR  reduce 95
+	BITXOR  reduce 95
+	BITAND  reduce 95
+	EQ  reduce 95
+	NE  reduce 95
+	GT  reduce 95
+	GE  reduce 95
+	LT  reduce 95
+	LE  reduce 95
+	LSH  reduce 95
+	RSH  reduce 95
+	ADD  reduce 95
+	SUB  reduce 95
+	MUL  reduce 95
+	DIV  reduce 95
+	MOD  reduce 95
+	';'  reduce 95
+	','  reduce 95
+	']'  reduce 95
+	')'  reduce 95
+
+
+state 77
+	expr : BITAND lval .  (86)
+
+	.  reduce 86
+
+
+state 78
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+	expr : SUB expr .  (87)
+
+	.  reduce 87
+
+
+state 79
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+	expr : COM expr .  (88)
+
+	.  reduce 88
+
+
+state 80
+	block : '{' stmts . '}'  (28)
+	stmts : stmts . lblstmt  (30)
+	b : .  (35)
+
+	'}'  shift 121
+	ID  reduce 35
+	CON  reduce 35
+	STR  reduce 35
+	FOR  reduce 35
+	IF  reduce 35
+	RETURN  reduce 35
+	WHILE  reduce 35
+	DO  reduce 35
+	CONTINUE  reduce 35
+	BREAK  reduce 35
+	GOTO  reduce 35
+	BITAND  reduce 35
+	SUB  reduce 35
+	COM  reduce 35
+	';'  reduce 35
+	'{'  reduce 35
+	'('  reduce 35
+
+	lblstmt  goto 29
+	b  goto 30
+
+
+state 81
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+	expr : '(' expr . ')'  (92)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	')'  shift 122
+	.  error
+
+
+state 82
+	expr : lval SET . expr  (65)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 123
+
+
+state 83
+	expr : lval SETOR . expr  (66)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 124
+
+
+state 84
+	expr : lval SETXOR . expr  (67)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 125
+
+
+state 85
+	expr : lval SETAND . expr  (68)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 126
+
+
+state 86
+	expr : lval SETLSH . expr  (69)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 127
+
+
+state 87
+	expr : lval SETRSH . expr  (70)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 128
+
+
+state 88
+	expr : lval SETADD . expr  (71)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 129
+
+
+state 89
+	expr : lval SETSUB . expr  (72)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 130
+
+
+state 90
+	expr : lval SETMUL . expr  (73)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 131
+
+
+state 91
+	expr : lval SETDIV . expr  (74)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 132
+
+
+state 92
+	expr : lval SETMOD . expr  (75)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 133
+
+
+state 93
+	expr : expr BITOR . expr  (76)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 134
+
+
+state 94
+	expr : expr BITXOR . expr  (77)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 135
+
+
+state 95
+	expr : expr BITAND . expr  (78)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 136
+
+
+state 96
+	expr : expr LSH . expr  (79)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 137
+
+
+state 97
+	expr : expr RSH . expr  (80)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 138
+
+
+state 98
+	expr : expr ADD . expr  (81)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 139
+
+
+state 99
+	expr : expr SUB . expr  (82)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 140
+
+
+state 100
+	expr : expr MUL . expr  (83)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 141
+
+
+state 101
+	expr : expr DIV . expr  (84)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 142
+
+
+state 102
+	expr : expr MOD . expr  (85)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 143
+
+
+state 103
+	stmt : expr ';' .  (36)
+
+	.  reduce 36
+
+
+state 104
+	labels : labels ID . ':'  (34)
+	expr : ID . '(' ')'  (90)
+	expr : ID . '(' exprs ')'  (91)
+	lval : ID .  (95)
+	lval : ID . '[' expr ']'  (96)
+
+	'['  shift 63
+	'('  shift 64
+	':'  shift 144
+	SET  reduce 95
+	SETOR  reduce 95
+	SETXOR  reduce 95
+	SETAND  reduce 95
+	SETLSH  reduce 95
+	SETRSH  reduce 95
+	SETADD  reduce 95
+	SETSUB  reduce 95
+	SETMUL  reduce 95
+	SETDIV  reduce 95
+	SETMOD  reduce 95
+	BITOR  reduce 95
+	BITXOR  reduce 95
+	BITAND  reduce 95
+	LSH  reduce 95
+	RSH  reduce 95
+	ADD  reduce 95
+	SUB  reduce 95
+	MUL  reduce 95
+	DIV  reduce 95
+	MOD  reduce 95
+	';'  reduce 95
+
+
+state 105
+	lblstmt : b labels stmt .  (32)
+
+	.  reduce 32
+
+
+state 106
+	args : args ',' type dclr .  (24)
+
+	.  reduce 24
+
+
+state 107
+	dcls : dcls dcl ';' .  (7)
+
+	.  reduce 7
+
+
+state 108
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+	lval : ID '[' expr . ']'  (96)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	']'  shift 145
+	.  error
+
+
+state 109
+	expr : ID '(' ')' .  (90)
+
+	.  reduce 90
+
+
+state 110
+	exprs : expr .  (61)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	','  reduce 61
+	')'  reduce 61
+
+
+state 111
+	exprs : exprs . ',' expr  (62)
+	expr : ID '(' exprs . ')'  (91)
+
+	','  shift 146
+	')'  shift 147
+	.  error
+
+
+state 112
+	expro : expr .  (64)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	';'  reduce 64
+	')'  reduce 64
+
+
+state 113
+	stmt : FOR '(' expro . ';' m cexpro ';' m expro n ')' m s lblstmt n m  (41)
+
+	';'  shift 148
+	.  error
+
+
+state 114
+	cexpr : NOT . cexpr  (59)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 149
+
+
+state 115
+	cexpr : expr . EQ expr  (51)
+	cexpr : expr . NE expr  (52)
+	cexpr : expr . LE expr  (53)
+	cexpr : expr . GE expr  (54)
+	cexpr : expr . LT expr  (55)
+	cexpr : expr . GT expr  (56)
+	cexpr : expr .  (60)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	EQ  shift 150
+	NE  shift 151
+	GT  shift 152
+	GE  shift 153
+	LT  shift 154
+	LE  shift 155
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 60
+	AND  reduce 60
+	';'  reduce 60
+	')'  reduce 60
+
+
+state 116
+	stmt : IF '(' cexpr . ')' m lblstmt m  (37)
+	stmt : IF '(' cexpr . ')' m lblstmt ELSE n m lblstmt m  (38)
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+
+	OR  shift 156
+	AND  shift 157
+	')'  shift 158
+	.  error
+
+
+state 117
+	stmt : RETURN expr ';' .  (46)
+
+	.  reduce 46
+
+
+state 118
+	stmt : WHILE '(' m . cexpr ')' m s lblstmt n m  (39)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 159
+
+
+state 119
+	stmt : DO m s . lblstmt WHILE '(' m cexpr ')' ';' m  (40)
+	b : .  (35)
+
+	.  reduce 35
+
+	lblstmt  goto 160
+	b  goto 30
+
+
+state 120
+	stmt : GOTO ID ';' .  (44)
+
+	.  reduce 44
+
+
+state 121
+	block : '{' stmts '}' .  (28)
+
+	.  reduce 28
+
+
+state 122
+	expr : '(' expr ')' .  (92)
+
+	.  reduce 92
+
+
+state 123
+	expr : lval SET expr .  (65)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 65
+	AND  reduce 65
+	EQ  reduce 65
+	NE  reduce 65
+	GT  reduce 65
+	GE  reduce 65
+	LT  reduce 65
+	LE  reduce 65
+	';'  reduce 65
+	','  reduce 65
+	']'  reduce 65
+	')'  reduce 65
+
+
+state 124
+	expr : lval SETOR expr .  (66)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 66
+	AND  reduce 66
+	EQ  reduce 66
+	NE  reduce 66
+	GT  reduce 66
+	GE  reduce 66
+	LT  reduce 66
+	LE  reduce 66
+	';'  reduce 66
+	','  reduce 66
+	']'  reduce 66
+	')'  reduce 66
+
+
+state 125
+	expr : lval SETXOR expr .  (67)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 67
+	AND  reduce 67
+	EQ  reduce 67
+	NE  reduce 67
+	GT  reduce 67
+	GE  reduce 67
+	LT  reduce 67
+	LE  reduce 67
+	';'  reduce 67
+	','  reduce 67
+	']'  reduce 67
+	')'  reduce 67
+
+
+state 126
+	expr : lval SETAND expr .  (68)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 68
+	AND  reduce 68
+	EQ  reduce 68
+	NE  reduce 68
+	GT  reduce 68
+	GE  reduce 68
+	LT  reduce 68
+	LE  reduce 68
+	';'  reduce 68
+	','  reduce 68
+	']'  reduce 68
+	')'  reduce 68
+
+
+state 127
+	expr : lval SETLSH expr .  (69)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 69
+	AND  reduce 69
+	EQ  reduce 69
+	NE  reduce 69
+	GT  reduce 69
+	GE  reduce 69
+	LT  reduce 69
+	LE  reduce 69
+	';'  reduce 69
+	','  reduce 69
+	']'  reduce 69
+	')'  reduce 69
+
+
+state 128
+	expr : lval SETRSH expr .  (70)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 70
+	AND  reduce 70
+	EQ  reduce 70
+	NE  reduce 70
+	GT  reduce 70
+	GE  reduce 70
+	LT  reduce 70
+	LE  reduce 70
+	';'  reduce 70
+	','  reduce 70
+	']'  reduce 70
+	')'  reduce 70
+
+
+state 129
+	expr : lval SETADD expr .  (71)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 71
+	AND  reduce 71
+	EQ  reduce 71
+	NE  reduce 71
+	GT  reduce 71
+	GE  reduce 71
+	LT  reduce 71
+	LE  reduce 71
+	';'  reduce 71
+	','  reduce 71
+	']'  reduce 71
+	')'  reduce 71
+
+
+state 130
+	expr : lval SETSUB expr .  (72)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 72
+	AND  reduce 72
+	EQ  reduce 72
+	NE  reduce 72
+	GT  reduce 72
+	GE  reduce 72
+	LT  reduce 72
+	LE  reduce 72
+	';'  reduce 72
+	','  reduce 72
+	']'  reduce 72
+	')'  reduce 72
+
+
+state 131
+	expr : lval SETMUL expr .  (73)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 73
+	AND  reduce 73
+	EQ  reduce 73
+	NE  reduce 73
+	GT  reduce 73
+	GE  reduce 73
+	LT  reduce 73
+	LE  reduce 73
+	';'  reduce 73
+	','  reduce 73
+	']'  reduce 73
+	')'  reduce 73
+
+
+state 132
+	expr : lval SETDIV expr .  (74)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 74
+	AND  reduce 74
+	EQ  reduce 74
+	NE  reduce 74
+	GT  reduce 74
+	GE  reduce 74
+	LT  reduce 74
+	LE  reduce 74
+	';'  reduce 74
+	','  reduce 74
+	']'  reduce 74
+	')'  reduce 74
+
+
+state 133
+	expr : lval SETMOD expr .  (75)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 75
+	AND  reduce 75
+	EQ  reduce 75
+	NE  reduce 75
+	GT  reduce 75
+	GE  reduce 75
+	LT  reduce 75
+	LE  reduce 75
+	';'  reduce 75
+	','  reduce 75
+	']'  reduce 75
+	')'  reduce 75
+
+
+state 134
+	expr : expr . BITOR expr  (76)
+	expr : expr BITOR expr .  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 76
+	AND  reduce 76
+	BITOR  reduce 76
+	EQ  reduce 76
+	NE  reduce 76
+	GT  reduce 76
+	GE  reduce 76
+	LT  reduce 76
+	LE  reduce 76
+	';'  reduce 76
+	','  reduce 76
+	']'  reduce 76
+	')'  reduce 76
+
+
+state 135
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr BITXOR expr .  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 77
+	AND  reduce 77
+	BITOR  reduce 77
+	BITXOR  reduce 77
+	EQ  reduce 77
+	NE  reduce 77
+	GT  reduce 77
+	GE  reduce 77
+	LT  reduce 77
+	LE  reduce 77
+	';'  reduce 77
+	','  reduce 77
+	']'  reduce 77
+	')'  reduce 77
+
+
+state 136
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr BITAND expr .  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 78
+	AND  reduce 78
+	BITOR  reduce 78
+	BITXOR  reduce 78
+	BITAND  reduce 78
+	EQ  reduce 78
+	NE  reduce 78
+	GT  reduce 78
+	GE  reduce 78
+	LT  reduce 78
+	LE  reduce 78
+	';'  reduce 78
+	','  reduce 78
+	']'  reduce 78
+	')'  reduce 78
+
+
+state 137
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr LSH expr .  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 79
+	AND  reduce 79
+	BITOR  reduce 79
+	BITXOR  reduce 79
+	BITAND  reduce 79
+	EQ  reduce 79
+	NE  reduce 79
+	GT  reduce 79
+	GE  reduce 79
+	LT  reduce 79
+	LE  reduce 79
+	LSH  reduce 79
+	RSH  reduce 79
+	';'  reduce 79
+	','  reduce 79
+	']'  reduce 79
+	')'  reduce 79
+
+
+state 138
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr RSH expr .  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 80
+	AND  reduce 80
+	BITOR  reduce 80
+	BITXOR  reduce 80
+	BITAND  reduce 80
+	EQ  reduce 80
+	NE  reduce 80
+	GT  reduce 80
+	GE  reduce 80
+	LT  reduce 80
+	LE  reduce 80
+	LSH  reduce 80
+	RSH  reduce 80
+	';'  reduce 80
+	','  reduce 80
+	']'  reduce 80
+	')'  reduce 80
+
+
+state 139
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr ADD expr .  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 81
+	AND  reduce 81
+	BITOR  reduce 81
+	BITXOR  reduce 81
+	BITAND  reduce 81
+	EQ  reduce 81
+	NE  reduce 81
+	GT  reduce 81
+	GE  reduce 81
+	LT  reduce 81
+	LE  reduce 81
+	LSH  reduce 81
+	RSH  reduce 81
+	ADD  reduce 81
+	SUB  reduce 81
+	';'  reduce 81
+	','  reduce 81
+	']'  reduce 81
+	')'  reduce 81
+
+
+state 140
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr SUB expr .  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 82
+	AND  reduce 82
+	BITOR  reduce 82
+	BITXOR  reduce 82
+	BITAND  reduce 82
+	EQ  reduce 82
+	NE  reduce 82
+	GT  reduce 82
+	GE  reduce 82
+	LT  reduce 82
+	LE  reduce 82
+	LSH  reduce 82
+	RSH  reduce 82
+	ADD  reduce 82
+	SUB  reduce 82
+	';'  reduce 82
+	','  reduce 82
+	']'  reduce 82
+	')'  reduce 82
+
+
+state 141
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr MUL expr .  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	.  reduce 83
+
+
+state 142
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr DIV expr .  (84)
+	expr : expr . MOD expr  (85)
+
+	.  reduce 84
+
+
+state 143
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+	expr : expr MOD expr .  (85)
+
+	.  reduce 85
+
+
+state 144
+	labels : labels ID ':' .  (34)
+
+	.  reduce 34
+
+
+state 145
+	lval : ID '[' expr ']' .  (96)
+
+	.  reduce 96
+
+
+state 146
+	exprs : exprs ',' . expr  (62)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 161
+
+
+state 147
+	expr : ID '(' exprs ')' .  (91)
+
+	.  reduce 91
+
+
+state 148
+	stmt : FOR '(' expro ';' . m cexpro ';' m expro n ')' m s lblstmt n m  (41)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 162
+
+
+state 149
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+	cexpr : NOT cexpr .  (59)
+
+	.  reduce 59
+
+
+state 150
+	cexpr : expr EQ . expr  (51)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 163
+
+
+state 151
+	cexpr : expr NE . expr  (52)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 164
+
+
+state 152
+	cexpr : expr GT . expr  (56)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 165
+
+
+state 153
+	cexpr : expr GE . expr  (54)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 166
+
+
+state 154
+	cexpr : expr LT . expr  (55)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 167
+
+
+state 155
+	cexpr : expr LE . expr  (53)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 168
+
+
+state 156
+	cexpr : cexpr OR . m cexpr  (58)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 169
+
+
+state 157
+	cexpr : cexpr AND . m cexpr  (57)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 170
+
+
+state 158
+	stmt : IF '(' cexpr ')' . m lblstmt m  (37)
+	stmt : IF '(' cexpr ')' . m lblstmt ELSE n m lblstmt m  (38)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 171
+
+
+state 159
+	stmt : WHILE '(' m cexpr . ')' m s lblstmt n m  (39)
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+
+	OR  shift 156
+	AND  shift 157
+	')'  shift 172
+	.  error
+
+
+state 160
+	stmt : DO m s lblstmt . WHILE '(' m cexpr ')' ';' m  (40)
+
+	WHILE  shift 173
+	.  error
+
+
+state 161
+	exprs : exprs ',' expr .  (62)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	','  reduce 62
+	')'  reduce 62
+
+
+state 162
+	stmt : FOR '(' expro ';' m . cexpro ';' m expro n ')' m s lblstmt n m  (41)
+	cexpro : .  (49)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	';'  reduce 49
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 174
+	cexpro  goto 175
+
+
+state 163
+	cexpr : expr EQ expr .  (51)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 51
+	AND  reduce 51
+	';'  reduce 51
+	')'  reduce 51
+
+
+state 164
+	cexpr : expr NE expr .  (52)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 52
+	AND  reduce 52
+	';'  reduce 52
+	')'  reduce 52
+
+
+state 165
+	cexpr : expr GT expr .  (56)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 56
+	AND  reduce 56
+	';'  reduce 56
+	')'  reduce 56
+
+
+state 166
+	cexpr : expr GE expr .  (54)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 54
+	AND  reduce 54
+	';'  reduce 54
+	')'  reduce 54
+
+
+state 167
+	cexpr : expr LT expr .  (55)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 55
+	AND  reduce 55
+	';'  reduce 55
+	')'  reduce 55
+
+
+state 168
+	cexpr : expr LE expr .  (53)
+	expr : expr . BITOR expr  (76)
+	expr : expr . BITXOR expr  (77)
+	expr : expr . BITAND expr  (78)
+	expr : expr . LSH expr  (79)
+	expr : expr . RSH expr  (80)
+	expr : expr . ADD expr  (81)
+	expr : expr . SUB expr  (82)
+	expr : expr . MUL expr  (83)
+	expr : expr . DIV expr  (84)
+	expr : expr . MOD expr  (85)
+
+	BITOR  shift 93
+	BITXOR  shift 94
+	BITAND  shift 95
+	LSH  shift 96
+	RSH  shift 97
+	ADD  shift 98
+	SUB  shift 99
+	MUL  shift 100
+	DIV  shift 101
+	MOD  shift 102
+	OR  reduce 53
+	AND  reduce 53
+	';'  reduce 53
+	')'  reduce 53
+
+
+state 169
+	cexpr : cexpr OR m . cexpr  (58)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 176
+
+
+state 170
+	cexpr : cexpr AND m . cexpr  (57)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 177
+
+
+state 171
+	stmt : IF '(' cexpr ')' m . lblstmt m  (37)
+	stmt : IF '(' cexpr ')' m . lblstmt ELSE n m lblstmt m  (38)
+	b : .  (35)
+
+	.  reduce 35
+
+	lblstmt  goto 178
+	b  goto 30
+
+
+state 172
+	stmt : WHILE '(' m cexpr ')' . m s lblstmt n m  (39)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 179
+
+
+state 173
+	stmt : DO m s lblstmt WHILE . '(' m cexpr ')' ';' m  (40)
+
+	'('  shift 180
+	.  error
+
+
+state 174
+	cexpro : cexpr .  (50)
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+
+	OR  shift 156
+	AND  shift 157
+	';'  reduce 50
+
+
+state 175
+	stmt : FOR '(' expro ';' m cexpro . ';' m expro n ')' m s lblstmt n m  (41)
+
+	';'  shift 181
+	.  error
+
+
+state 176
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+	cexpr : cexpr OR m cexpr .  (58)
+
+	AND  shift 157
+	OR  reduce 58
+	';'  reduce 58
+	')'  reduce 58
+
+
+state 177
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr AND m cexpr .  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+
+	.  reduce 57
+
+
+178: shift/reduce conflict (shift 182, reduce 26) on ELSE
+state 178
+	stmt : IF '(' cexpr ')' m lblstmt . m  (37)
+	stmt : IF '(' cexpr ')' m lblstmt . ELSE n m lblstmt m  (38)
+	m : .  (26)
+
+	ELSE  shift 182
+	ID  reduce 26
+	CON  reduce 26
+	STR  reduce 26
+	FOR  reduce 26
+	IF  reduce 26
+	RETURN  reduce 26
+	WHILE  reduce 26
+	DO  reduce 26
+	CONTINUE  reduce 26
+	BREAK  reduce 26
+	GOTO  reduce 26
+	BITAND  reduce 26
+	SUB  reduce 26
+	COM  reduce 26
+	';'  reduce 26
+	'}'  reduce 26
+	'{'  reduce 26
+	'('  reduce 26
+
+	m  goto 183
+
+
+state 179
+	stmt : WHILE '(' m cexpr ')' m . s lblstmt n m  (39)
+	s : .  (25)
+
+	.  reduce 25
+
+	s  goto 184
+
+
+state 180
+	stmt : DO m s lblstmt WHILE '(' . m cexpr ')' ';' m  (40)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 185
+
+
+state 181
+	stmt : FOR '(' expro ';' m cexpro ';' . m expro n ')' m s lblstmt n m  (41)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 186
+
+
+state 182
+	stmt : IF '(' cexpr ')' m lblstmt ELSE . n m lblstmt m  (38)
+	n : .  (27)
+
+	.  reduce 27
+
+	n  goto 187
+
+
+state 183
+	stmt : IF '(' cexpr ')' m lblstmt m .  (37)
+
+	.  reduce 37
+
+
+state 184
+	stmt : WHILE '(' m cexpr ')' m s . lblstmt n m  (39)
+	b : .  (35)
+
+	.  reduce 35
+
+	lblstmt  goto 188
+	b  goto 30
+
+
+state 185
+	stmt : DO m s lblstmt WHILE '(' m . cexpr ')' ';' m  (40)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	NOT  shift 114
+	COM  shift 50
+	'('  shift 53
+	.  error
+
+	lval  goto 54
+	expr  goto 115
+	cexpr  goto 189
+
+
+state 186
+	stmt : FOR '(' expro ';' m cexpro ';' m . expro n ')' m s lblstmt n m  (41)
+	expro : .  (63)
+
+	ID  shift 68
+	CON  shift 38
+	STR  shift 39
+	BITAND  shift 48
+	SUB  shift 49
+	COM  shift 50
+	'('  shift 53
+	')'  reduce 63
+
+	lval  goto 54
+	expr  goto 112
+	expro  goto 190
+
+
+state 187
+	stmt : IF '(' cexpr ')' m lblstmt ELSE n . m lblstmt m  (38)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 191
+
+
+state 188
+	stmt : WHILE '(' m cexpr ')' m s lblstmt . n m  (39)
+	n : .  (27)
+
+	.  reduce 27
+
+	n  goto 192
+
+
+state 189
+	stmt : DO m s lblstmt WHILE '(' m cexpr . ')' ';' m  (40)
+	cexpr : cexpr . AND m cexpr  (57)
+	cexpr : cexpr . OR m cexpr  (58)
+
+	OR  shift 156
+	AND  shift 157
+	')'  shift 193
+	.  error
+
+
+state 190
+	stmt : FOR '(' expro ';' m cexpro ';' m expro . n ')' m s lblstmt n m  (41)
+	n : .  (27)
+
+	.  reduce 27
+
+	n  goto 194
+
+
+state 191
+	stmt : IF '(' cexpr ')' m lblstmt ELSE n m . lblstmt m  (38)
+	b : .  (35)
+
+	.  reduce 35
+
+	lblstmt  goto 195
+	b  goto 30
+
+
+state 192
+	stmt : WHILE '(' m cexpr ')' m s lblstmt n . m  (39)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 196
+
+
+state 193
+	stmt : DO m s lblstmt WHILE '(' m cexpr ')' . ';' m  (40)
+
+	';'  shift 197
+	.  error
+
+
+state 194
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n . ')' m s lblstmt n m  (41)
+
+	')'  shift 198
+	.  error
+
+
+state 195
+	stmt : IF '(' cexpr ')' m lblstmt ELSE n m lblstmt . m  (38)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 199
+
+
+state 196
+	stmt : WHILE '(' m cexpr ')' m s lblstmt n m .  (39)
+
+	.  reduce 39
+
+
+state 197
+	stmt : DO m s lblstmt WHILE '(' m cexpr ')' ';' . m  (40)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 200
+
+
+state 198
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' . m s lblstmt n m  (41)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 201
+
+
+state 199
+	stmt : IF '(' cexpr ')' m lblstmt ELSE n m lblstmt m .  (38)
+
+	.  reduce 38
+
+
+state 200
+	stmt : DO m s lblstmt WHILE '(' m cexpr ')' ';' m .  (40)
+
+	.  reduce 40
+
+
+state 201
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' m . s lblstmt n m  (41)
+	s : .  (25)
+
+	.  reduce 25
+
+	s  goto 202
+
+
+state 202
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' m s . lblstmt n m  (41)
+	b : .  (35)
+
+	.  reduce 35
+
+	lblstmt  goto 203
+	b  goto 30
+
+
+state 203
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' m s lblstmt . n m  (41)
+	n : .  (27)
+
+	.  reduce 27
+
+	n  goto 204
+
+
+state 204
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' m s lblstmt n . m  (41)
+	m : .  (26)
+
+	.  reduce 26
+
+	m  goto 205
+
+
+state 205
+	stmt : FOR '(' expro ';' m cexpro ';' m expro n ')' m s lblstmt n m .  (41)
+
+	.  reduce 41
+
+
+State 178 contains 1 shift/reduce conflict.
+
+
+61 terminals, 28 nonterminals
+97 grammar rules, 206 states
