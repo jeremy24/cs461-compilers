@@ -147,7 +147,7 @@ struct sem_rec *call(char *f, struct sem_rec *args)
 	}
 	
 
-	int head = args ->s_place;
+	//int head = args ->s_place;
 	//fprintf(stderr, "List head: %d\n", args->s_place);
 	int i = 0;
 
@@ -598,7 +598,7 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 		y = conv_to_float(y);
 	}
 
-	printf("t%d := t%d <%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), y->s_place);
+	printf("t%d := t%d %s%c t%d\n", nexttemp(), x->s_place, op, char_type(x->s_mode), y->s_place);
 	printf("bt t%d B%d\n", currtemp(), nextbr());
 	printf("br B%d\n", nextbr());
 
