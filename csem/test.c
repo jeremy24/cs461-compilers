@@ -2,7 +2,7 @@
 
 
 
-int add( int x, double y)
+int shift( int x, double y)
 {
-	return x + y;
+	return x << y;
 }

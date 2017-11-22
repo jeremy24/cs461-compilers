@@ -447,8 +447,23 @@ struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
  */
 struct sem_rec *opb(char *op, struct sem_rec *x, struct sem_rec *y)
 {
-	fprintf(stderr, "sem: opb not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: opb not implemented\n");
+
+
+	if ( x->s_mode == T_DOUBLE )
+	{
+		printf("t%d := cvi t%d\n", nexttemp(), x->s_place);
+		x = node(currtemp(), T_INT, NULL,NULL);
+	}
+	if ( y->s_mode == T_DOUBLE )
+	{
+		printf("t%d := cvi t%d\n", nexttemp(), y->s_place);
+		y = node(currtemp(), T_INT, NULL,NULL);
+	}
+
+	printf("t%d := t%d %si t%d\n", x->s_place, nexttemp(), op, y->s_place);
+
+	return node(currtemp(), T_INT, NULL, NULL);
 }
 
 /*
@@ -487,40 +502,40 @@ struct sem_rec *string(char *s)
 }
 
 /*
-char * ret_chars( int target )
-{
-	int c;
-	char * ret = malloc(255);
-	int i = 0;
+   char * ret_chars( int target )
+   {
+   int c;
+   char * ret = malloc(255);
+   int i = 0;
 
-	while ( c = getchar() )
-	{
-		if ( c == EOF ) break;
-		if ( c == target ) break;
-		//if ( c == ' ') continue;
-		char cc = (char) c;
-		printf("keeping: %c\n", cc);	
-		ret[i] = cc;
-		i++;
-	}
-	ret[i] = '\0';
-	return ret;
+   while ( c = getchar() )
+   {
+   if ( c == EOF ) break;
+   if ( c == target ) break;
+//if ( c == ' ') continue;
+char cc = (char) c;
+printf("keeping: %c\n", cc);	
+ret[i] = cc;
+i++;
+}
+ret[i] = '\0';
+return ret;
 }
 
 
 
 int eat_chars(int target)
 {
-	int c;
-	int n;
+int c;
+int n;
 
-	while ( c = getchar() )
-	{
-		if ( c == EOF ) break;
-		if ( c == target ) break;
-		++n;
-	}
-	return n;
+while ( c = getchar() )
+{
+if ( c == EOF ) break;
+if ( c == target ) break;
+++n;
+}
+return n;
 }
 
 
@@ -529,32 +544,32 @@ int eat_chars(int target)
 
 void print_type(int t)
 {
-	switch(t)
-	{
-		case T_INT:
-			printf("int");
-			break;
-		case T_STR:
-			printf("str");
-			break;
-		case T_DOUBLE:
-			printf("double");
-			break;
-		case T_PROC:
-			printf("procedure");
-			break;
-		case T_ARRAY:
-			printf("array");
-			break;
-		case T_ADDR:
-			printf("Addr");
-			break;
-		case T_LBL:
-			printf("label");
-			break;
-		default:
-			fprintf(stderr, "Unknown Type");
-	}
+switch(t)
+{
+case T_INT:
+printf("int");
+break;
+case T_STR:
+printf("str");
+break;
+case T_DOUBLE:
+printf("double");
+break;
+case T_PROC:
+printf("procedure");
+break;
+case T_ARRAY:
+printf("array");
+break;
+case T_ADDR:
+printf("Addr");
+break;
+case T_LBL:
+printf("label");
+break;
+default:
+fprintf(stderr, "Unknown Type");
+}
 }
 
 void print_scope(int s)
