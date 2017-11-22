@@ -23,6 +23,7 @@ extern struct sem_rec ** top;
 int functype;
 
 
+
 void skip();
 void putbak(int);
 void yyerror(char*);
@@ -35,6 +36,22 @@ int nextlabel() { return ++_currlabel; }
 
 int currbr() { return   _currbranch; }
 int nextbr() { return ++_currbranch; }
+
+
+char char_type( int type )
+{
+	if ( (type & T_INT)    == T_INT    ) return 'i';
+	if ( (type & T_DOUBLE) == T_DOUBLE ) return 'f';
+	return '?';
+}
+
+int int_type ( int type )
+{
+	if ( (type & T_INT)    == T_INT    ) return T_INT;
+	if ( (type & T_DOUBLE) == T_DOUBLE ) return T_DOUBLE;
+	return -1;
+}
+
 
 //static void print_id_entry( struct id_entry * );
 //static void print_scope(int);
@@ -361,35 +378,11 @@ void ftail()
  */
 struct sem_rec *id(char *x)
 {
-	//fprintf(stderr, "sem: id, x = %s\n", x);
-	//printf("%s\n", localtypes);
-
-	// formaltypes -> chars
-	// formalnum -> int num of them
-
-	//struct sem_rec * rec = NULL;
-
 	struct id_entry * p;
 	int type;
 
 	if ((p = lookup(x, 0)) == NULL) {
-		/*
-		p = install(x, -1);
-		char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
-
-		char * name = p->i_name;
-		if ( p-> i_scope == PARAM )
-		{
-			name = "PARAM FIX";
-		} else if ( p->i_scope == LOCAL )
-		{
-			name = "LOCAL FIX";
-		}
-
-		printf("t%d := %s %s\n", nexttemp(), scope, name);
-		rec = node(currtemp(), p->i_type, NULL, NULL); 
-		rec -> s_place = currtemp();
-		*/
+		fprintf(stderr, "Variable %s not found\n", x);
 	} else if ( p->i_defined )
 	{
 		//fprintf(stderr, "Variable already declared: %s\n", x);
@@ -403,7 +396,9 @@ struct sem_rec *id(char *x)
 		} else if ( p->i_scope == GLOBAL )
 		{
 			printf("t%d := global %s\n", nexttemp(), p->i_name);
-			type = p->i_type;
+			
+			//fprintf(stderr, "Global %s id type = %c  Raw =%d\n", x, type_code(p-> , p->i_type); 
+			type = int_type( p->i_type);
 		} else
 		{
 			printf("t%d := param %d\n", nexttemp(), p->i_offset);
@@ -430,13 +425,13 @@ struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 	//fprintf(stderr, "sem: indx not implemented\n");
 	//fprintf(stderr, "%d  %d\n", x->s_place, i->s_place	
 	
-	//printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
+	printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
 	
 	printf("t%d := t%d []%c t%d\n", 
-			nexttemp(), x->s_place, x->s_mode==T_INT?'i':'f', i->s_place);
+			nexttemp(), x->s_place, char_type(x->s_mode), i->s_place);
 
 
-	return node(currtemp(), x->s_mode, NULL, NULL);
+	return node(currtemp(), int_type(x->s_mode), NULL, NULL);
 
 	//return ((struct sem_rec *) NULL);
 }
@@ -481,7 +476,7 @@ struct sem_rec *op1(char *op, struct sem_rec *y)
 	//fprintf(stderr, "sem: op1 not implemented\n");
 	//fprintf(stderr, "op1: %s  place: %d\n", op, y->s_place);	
 
-	printf("t%d := %s%c t%d\n", nexttemp(), op, y->s_mode == T_INT ? 'i' : 'f', y->s_place);
+	printf("t%d := %s%c t%d\n", nexttemp(), op, char_type(y->s_mode) , y->s_place);
 
 	return node(currtemp(), y->s_mode, NULL, NULL);
 }
@@ -500,7 +495,7 @@ struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
 	}
 
 	printf("t%d := t%d %s%c t%d\n", 
-			nexttemp(), x->s_place, op, x->s_mode==T_INT?'i':'f', y->s_place);
+			nexttemp(), x->s_place, op, char_type(x->s_mode) , y->s_place);
 
 	return node(currtemp(), x->s_mode, NULL, NULL);
 }
@@ -535,7 +530,7 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 		y = conv_to_float(y);
 	}
 
-	printf("t%d := t%d <%c t%d\n", nexttemp(), x->s_place, x->s_mode ==T_INT?'i':'f', y->s_place);
+	printf("t%d := t%d <%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), y->s_place);
 	printf("bt t%d B%d\n", currtemp(), nextbr());
 	printf("br B%d\n", nextbr());
 
@@ -554,17 +549,13 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 	//char type = x->s_mode==T_INT?'i':'f';
 	//char type1 = y->s_mode==T_INT?'i':'f';
 
-	//printf("%c %c\n", type, type1);
-	//printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, type, y->s_place);
-
-
 	if ( x->s_mode != y->s_mode )
 	{
 		x = conv_to_float(x);
 		y = conv_to_float(y);
 	}
 
-	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, x->s_mode==T_INT?'i':'f', y->s_place);
+	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), y->s_place);
 
 	return node(currtemp(), x->s_mode, NULL, NULL);
 
