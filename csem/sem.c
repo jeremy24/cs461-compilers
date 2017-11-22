@@ -446,7 +446,7 @@ struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 	//fprintf(stderr, "sem: indx not implemented\n");
 	//fprintf(stderr, "%d  %d\n", x->s_place, i->s_place	
 	
-	printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
+	//printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
 	
 	printf("t%d := t%d []%c t%d\n", 
 			nexttemp(), x->s_place, char_type(x->s_mode), i->s_place);
@@ -509,7 +509,7 @@ struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: op2 not implemented\n");
 
-	if ( x->s_mode != y->s_mode)
+	if ( are_diff(x, y) )
 	{
 		x = conv_to_float(x);
 		y = conv_to_float(y);
@@ -572,8 +572,15 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 
 	if ( are_diff(x,y) )
 	{
-		x = conv_to_float(x);
-		y = conv_to_float(y);
+		if ( int_type(x->s_mode) == T_INT )
+		{
+			y = conv_to_int(y);
+		} else {
+			y = conv_to_float(y);
+		}
+
+			//x = conv_to_float(x);
+			//y = conv_to_float(y);
 	}
 
 	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), y->s_place);
@@ -604,106 +611,13 @@ struct sem_rec *string(char *s)
 	//return ((struct sem_rec *) NULL);
 }
 
-/*
-   char * ret_chars( int target )
-   {
-   int c;
-   char * ret = malloc(255);
-   int i = 0;
-
-   while ( c = getchar() )
-   {
-   if ( c == EOF ) break;
-   if ( c == target ) break;
-//if ( c == ' ') continue;
-char cc = (char) c;
-printf("keeping: %c\n", cc);	
-ret[i] = cc;
-i++;
-}
-ret[i] = '\0';
-return ret;
-}
-
-
-
-int eat_chars(int target)
-{
-int c;
-int n;
-
-while ( c = getchar() )
-{
-if ( c == EOF ) break;
-if ( c == target ) break;
-++n;
-}
-return n;
-}
 
 
 
 
 
-void print_type(int t)
-{
-switch(t)
-{
-case T_INT:
-printf("int");
-break;
-case T_STR:
-printf("str");
-break;
-case T_DOUBLE:
-printf("double");
-break;
-case T_PROC:
-printf("procedure");
-break;
-case T_ARRAY:
-printf("array");
-break;
-case T_ADDR:
-printf("Addr");
-break;
-case T_LBL:
-printf("label");
-break;
-default:
-fprintf(stderr, "Unknown Type");
-}
-}
-
-void print_scope(int s)
-{
-	if ( s == LOCAL )
-	{
-		printf("local");
-	} else if ( s == PARAM )
-	{
-		printf("param");
-
-	} else if ( s == GLOBAL )
-	{
-		printf("global");
-	} else {
-		fprintf(stderr, "Unknown Scope");
-	}
-}
 
 
-void print_id_entry( struct id_entry * s )
-{
-	printf("\n");
-	printf("Name: %s\n", s->i_name);
-	printf("\tType: ");  print_type(s->i_type);
-	printf("\n");
-	printf("\tScope: "); print_scope(s->i_scope);
-	printf("\n");
-}
-
-*/
 
 
 
