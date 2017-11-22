@@ -18,17 +18,20 @@ extern int  localwidths[MAXLOCS];
 
 extern char formaltypes[MAXARGS];
 extern char localtypes[MAXLOCS];
+extern struct sem_rec ** top;
+
+int functype;
 
 
 void skip();
 void putbak(int);
-void yyeccor(char*);
+void yyerror(char*);
 
-static void print_id_entry( struct id_entry * );
-static void print_scope(int);
-static void print_type(int);
-static int eat_chars(int);
-static char * ret_chars(int);
+//static void print_id_entry( struct id_entry * );
+//static void print_scope(int);
+//static void print_type(int);
+//static int eat_chars(int);
+//static char * ret_chars(int);
 
 
 
@@ -116,13 +119,12 @@ struct sem_rec *con(char *x)
 	//fprintf(stderr, "sem: con implemented\n");
 	//fprintf(stderr, "con val: %s\n", x);
 
-	int type;
+	//int type;
 
 	switch ( localtypes[0] )
 	{
 		case 'i':
 			printf("t%d := %s\n", nexttemp(), x);
-			type = T_INT;
 			return node(currtemp(), T_INT, NULL, NULL);
 		case 'f':
 			printf("t%d := %s\n", nexttemp(), x);
@@ -199,14 +201,30 @@ void doifelse(struct sem_rec *e, int m1, struct sem_rec *n,
  */
 void doret(struct sem_rec *e)
 {
+
+	int loc = e->s_place;
+
+	// we need to cast
+	if ( functype != e -> s_mode )
+	{
+		printf("t%d := cv%c t%d\n", nexttemp(), functype == T_INT ? 'i' : 'f', e->s_place);
+		loc = currtemp();
+	}
+	
+
+	if ( e == NULL ) {
+		fprintf(stderr, "NULL passed to doret\n");
+		exit(1);
+	}
+
 	// fprintf(stderr, "sem: doret not implemented\n");
-	switch ( e->s_mode )
+	switch ( functype )
 	{
 		case T_DOUBLE:
-			printf("retf t%d\n", e->s_place);
+			printf("retf t%d\n", loc);
 			break;
 		case T_INT:
-			printf("reti t%d\n", e->s_place);
+			printf("reti t%d\n", loc);
 			break;
 		default:
 			fprintf(stderr, "Invalid type in doret: %c\n", localtypes[0]);
@@ -242,10 +260,12 @@ struct sem_rec *exprs(struct sem_rec *l, struct sem_rec *e)
 /*
  * fhead - beginning of function body
  */
+
 void fhead(struct id_entry *p) {
 	printf("func %s\n", p->i_name);
 	unsigned int i;
 
+	functype = p->i_type;
 
 	for (i = 0; i < formalnum; i++) {
 		if (formaltypes[i] == 'f') {
@@ -284,10 +304,11 @@ struct id_entry *fname(int t, char *id) {
 	p->i_type = t;
 	p->i_scope = GLOBAL;
 	p->i_defined = 1;
+	
 	enterblock();
+	
 	formalnum = 0;
 	localnum = 0;
-
 	
 	return p;
 }
@@ -298,35 +319,45 @@ struct id_entry *fname(int t, char *id) {
 void ftail()
 {
 	//fprintf(stderr, "sem: ftail not implemented\n");
+	functype = -1;
 	printf("fend\n");
-	exit_block();
+	leaveblock();
 }
+
+
 
 /*
  * id - variable reference
  */
 struct sem_rec *id(char *x)
 {
-	fprintf(stderr, "sem: id\n");
+	//fprintf(stderr, "sem: id, x = %s\n", x);
 	//printf("%s\n", localtypes);
 	
 	// formaltypes -> chars
 	// formalnum -> int num of them
 
+	struct sem_rec * rec = NULL;
+	
+	struct id_entry * p;
 
-
-	if (localtypes[0] == 'f') {
-		return node(nexttemp(), T_DOUBLE, NULL, NULL);
-	} else if ( localtypes[0] == 'i' )
-	{
-		return node(nexttemp(), T_INT, NULL, NULL);
-	} else
-	{
-		fprintf(stderr, "Invalid type: %c\n", localtypes[0]);
+	if ((p = lookup(x, 0)) == NULL) {
+		fprintf(stderr, "Variable %s already declared\n", x);
+	} else {
+		char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
+		printf("t%d := %s %s\n", nexttemp(), scope, p->i_name);
+		rec = node(currtemp(), p->i_type, NULL, NULL); 
+		rec -> s_place = currtemp();
 	}
 
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "Made Rec: place = %d\n", rec -> s_place);
+
+	return rec;// node(currtemp(), p->i_type, NULL, NULL);
 }
+
+
+
+
 
 /*
  * indx - subscript
@@ -369,9 +400,14 @@ struct sem_rec *n()
 struct sem_rec *op1(char *op, struct sem_rec *y)
 {
 
-	fprintf(stderr, "sem: op1 not implemented\n");
-	fprintf(stderr, "op: %s\n", op);	
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: op1 not implemented\n");
+	//fprintf(stderr, "op1: %s  place: %d\n", op, y->s_place);	
+
+
+
+	printf("t%d := %s%c t%d\n", nexttemp(), op, y->s_mode == T_INT ? 'i' : 'f', y->s_place);
+
+	return node(currtemp(), y->s_mode, NULL, NULL);
 }
 
 /*
@@ -427,7 +463,7 @@ struct sem_rec *string(char *s)
 	return ((struct sem_rec *) NULL);
 }
 
-
+/*
 char * ret_chars( int target )
 {
 	int c;
@@ -526,7 +562,7 @@ void print_id_entry( struct id_entry * s )
 	printf("\n");
 }
 
-
+*/
 
 
 

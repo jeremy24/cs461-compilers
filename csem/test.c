@@ -1,9 +1,16 @@
-double m[6];
 
-scale(double x) {
-  int i;
 
-  double t;
+int b;
 
-  return 1;
+
+double scale(double x) {
+	int i;
+
+	double t;	
+	return b;
+}
+
+int add( int x, int y)
+{
+	return x;
 }
