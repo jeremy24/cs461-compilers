@@ -27,11 +27,39 @@ void skip();
 void putbak(int);
 void yyerror(char*);
 
+int _currlabel = 0;
+
+int currlabel() { return _currlabel;   }
+int nextlabel() { return ++_currlabel; }
+
+
 //static void print_id_entry( struct id_entry * );
 //static void print_scope(int);
 //static void print_type(int);
 //static int eat_chars(int);
 //static char * ret_chars(int);
+
+
+
+struct sem_rec * conv_to_int( struct sem_rec * x )
+{
+	if ( x -> s_mode == T_DOUBLE )
+	{
+		printf("t%d := cvi t%d\n", nexttemp(), x->s_place);
+		return node(currtemp(), T_INT, NULL, NULL);
+	}
+	return x;
+}
+
+struct sem_rec * conv_to_float( struct sem_rec * x )
+{
+	if ( x -> s_mode == T_INT )
+	{
+		printf("t%d := cvf t%d\n", nexttemp(), x->s_place);
+		return node(currtemp(), T_DOUBLE, NULL, NULL);
+	}
+	return x;
+}
 
 
 
@@ -210,7 +238,7 @@ void doret(struct sem_rec *e)
 		printf("t%d := cv%c t%d\n", nexttemp(), functype == T_INT ? 'i' : 'f', e->s_place);
 		loc = currtemp();
 	}
-	
+
 
 	if ( e == NULL ) {
 		fprintf(stderr, "NULL passed to doret\n");
@@ -292,7 +320,7 @@ void fhead(struct id_entry *p) {
  */
 struct id_entry *fname(int t, char *id) {
 	struct id_entry *p;
-	
+
 	if ((p = lookup(id, 0)) == NULL) {
 		p = install(id, 0);
 	} else if (p->i_defined) {
@@ -304,12 +332,12 @@ struct id_entry *fname(int t, char *id) {
 	p->i_type = t;
 	p->i_scope = GLOBAL;
 	p->i_defined = 1;
-	
+
 	enterblock();
-	
+
 	formalnum = 0;
 	localnum = 0;
-	
+
 	return p;
 }
 
@@ -333,23 +361,26 @@ struct sem_rec *id(char *x)
 {
 	//fprintf(stderr, "sem: id, x = %s\n", x);
 	//printf("%s\n", localtypes);
-	
+
 	// formaltypes -> chars
 	// formalnum -> int num of them
 
 	struct sem_rec * rec = NULL;
-	
+
 	struct id_entry * p;
 
 	if ((p = lookup(x, 0)) == NULL) {
 		fprintf(stderr, "Variable %s already declared\n", x);
 	} else {
 		char * scope = p->i_scope == GLOBAL ? "global": p->i_scope == LOCAL ? "local" : "param";
-		
+
 		char * name = p->i_name;
 		if ( p-> i_scope == PARAM )
 		{
 			name = "PARAM FIX";
+		} else if ( p->i_scope == LOCAL )
+		{
+			name = "LOCAL FIX";
 		}
 
 		printf("t%d := %s %s\n", nexttemp(), scope, name);
@@ -388,8 +419,9 @@ void labeldcl(char *id)
  */
 int m()
 {
-	fprintf(stderr, "sem: m not implemented\n");
-	return (0);
+	//fprintf(stderr, "sem: m not implemented\n");
+	printf("label L%d\n", nextlabel());
+	return currtemp();
 }
 
 /*
@@ -421,20 +453,9 @@ struct sem_rec *op1(char *op, struct sem_rec *y)
 struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: op2 not implemented\n");
-	
-	int diff=0;
 
-	if ( x->s_mode != y->s_mode ) diff = 1;
-
-	if ( diff && x->s_mode == T_INT )
-	{
-		printf("t%d := cvf t%d\n", nexttemp(), x->s_place);
-		x = node(currtemp(), T_DOUBLE, NULL,NULL);
-	} else if ( diff && y->s_mode == T_INT )
-	{
-		printf("t%d := cvf t%d\n", nexttemp(), y->s_place);
-		y = node(currtemp(), T_DOUBLE, NULL, NULL);
-	}
+	x = conv_to_float(x);
+	y = conv_to_float(y);
 
 	printf("t%d := t%d %s%c t%d\n", 
 			nexttemp(), x->s_place, op, x->s_mode==T_INT?'i':'f', y->s_place);
@@ -448,20 +469,11 @@ struct sem_rec *op2(char *op, struct sem_rec *x, struct sem_rec *y)
 struct sem_rec *opb(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: opb not implemented\n");
+	
+	x = conv_to_int(x);
+	y = conv_to_int(y);
 
-
-	if ( x->s_mode == T_DOUBLE )
-	{
-		printf("t%d := cvi t%d\n", nexttemp(), x->s_place);
-		x = node(currtemp(), T_INT, NULL,NULL);
-	}
-	if ( y->s_mode == T_DOUBLE )
-	{
-		printf("t%d := cvi t%d\n", nexttemp(), y->s_place);
-		y = node(currtemp(), T_INT, NULL,NULL);
-	}
-
-	printf("t%d := t%d %si t%d\n", x->s_place, nexttemp(), op, y->s_place);
+	printf("t%d := t%d %si t%d\n", nexttemp(), x->s_place, op, y->s_place);
 
 	return node(currtemp(), T_INT, NULL, NULL);
 }
@@ -471,8 +483,16 @@ struct sem_rec *opb(char *op, struct sem_rec *x, struct sem_rec *y)
  */
 struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 {
-	fprintf(stderr, "sem: rel not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: rel not implemented\n");
+
+	int diff = x->s_mode != y->s_mode;
+
+	x = conv_to_float(x);
+	y = conv_to_float(y);
+
+	printf("t%d := t%d <%c t%d\n", nexttemp(), x->s_place, x->s_mode ==T_INT?'i':'f', y->s_place);
+
+	return node(currtemp(), x->s_mode, NULL, NULL);
 }
 
 /*
