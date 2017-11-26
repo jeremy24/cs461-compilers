@@ -273,7 +273,6 @@ struct sem_rec *con(char *x)
 	struct id_entry * p;
 
 	if ((p = lookup(x, 0)) == NULL) {
-		fprintf(stderr, "Making new con ref to %s\n", x);
 		p = install(x, 0);
 		p->i_type = T_INT;
 		p->i_scope = GLOBAL;
@@ -418,7 +417,7 @@ void endloopscope(int m)
  */
 struct sem_rec *exprs(struct sem_rec *l, struct sem_rec *e)
 {
-	fprintf(stderr, "%d -> %d\n", e->s_place, l->s_place);	
+	//fprintf(stderr, "%d -> %d\n", e->s_place, l->s_place);	
 	e -> back.s_link = l;
 	
 	return e;//((struct sem_rec *) NULL);
