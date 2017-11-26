@@ -443,7 +443,15 @@ void doret(struct sem_rec *e)
 void dowhile(int m1, struct sem_rec *e, int m2, struct sem_rec *n,
 		int m3)
 {
-	fprintf(stderr, "sem: dowhile not implemented\n");
+	//fprintf(stderr, "sem: dowhile not implemented\n");
+	backpatch(e->back.s_true, m2);
+	backpatch(e->s_false, m3);
+	backpatch(n, m1);
+
+	struct loopjunk * top = &loopscopes[ currloop() ];
+
+	backpatch(top->conts, m1);
+	endloopscope(m3);
 }
 
 /*
@@ -452,6 +460,11 @@ void dowhile(int m1, struct sem_rec *e, int m2, struct sem_rec *n,
 void endloopscope(int m)
 {
 	//fprintf(stderr, "sem: endloopscope not implemented\n");
+	
+	struct loopjunk * top = &loopscopes[ currloop() ];
+
+	backpatch(top->breaks, m);
+
 	decloop();
 }
 
