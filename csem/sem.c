@@ -231,13 +231,14 @@ struct sem_rec *ccexpr(struct sem_rec *e)
 		printf("br B%d\n", nextbr());
 	//}
 	
-	tmp1->s_place = currbr() - 1;
-	e->s_place = currbr();
+	tmp1->s_place = currbr();
+	e->s_place = currbr()-1;
 
 	//fprintf(stderr, "sem: ccexpr not implemented\n");
 	
 	
-	return node(0,0,tmp1, e); //((struct sem_rec *) NULL);
+	return node(0,0,
+			node(currbr()-1, T_LBL, NULL,NULL), node(currbr(), T_LBL, NULL, NULL)); //((struct sem_rec *) NULL);
 }
 
 /*
@@ -246,7 +247,7 @@ struct sem_rec *ccexpr(struct sem_rec *e)
 struct sem_rec *ccnot(struct sem_rec *e)
 {
 	//fprintf(stderr, "sem: ccnot not implemented\n");
-	return node(0, 0, NULL, e->back.s_true);
+	return node(0, 0, e->s_false, e->back.s_true);
 }
 
 /*
