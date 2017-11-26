@@ -37,6 +37,24 @@ int nextlabel() { return ++_currlabel; }
 int currbr() { return   _currbranch; }
 int nextbr() { return ++_currbranch; }
 
+
+#define MAXLOOPSIZE 50
+
+
+struct loopjunk {
+	struct sem_rec * breaks;
+	struct sem_rec * conts;
+};
+
+// make a thing so hold all the nonsense from loops
+struct loopjunk loopscopes[MAXLOOPSIZE];
+
+int _looptop = 0;
+
+int incloop()  { return ++_looptop; }
+int decloop()  { return --_looptop; }
+int currloop() { return   _looptop; } 
+
 /*
 struct sem_rec * cast( struct sem_rec * p, int type)
 {
@@ -112,11 +130,16 @@ struct sem_rec * conv_to_float( struct sem_rec * x )
 void backpatch(struct sem_rec *p, int k)
 {
 	
+	// sometimes wwe backpatch null junk in loop
+	// so we can leave this out where we are not debugging
+	// an if/else issue
+	/*
 	if ( p == NULL )
 	{
 		fprintf(stderr, "ERROR backpatch: p is NULL on k = %d\n", k);
 		assert(0);
 	}
+	*/
 
 	//fprintf(stderr, "sem: backpatch not implemented\n");
 	for ( ; p ; p = p->back.s_link )
@@ -220,7 +243,7 @@ struct sem_rec *ccexpr(struct sem_rec *e)
 
 	if ( !relexpr )
 	{
-		struct sem_rec * contmp = con("0");
+		con("0");
 		tmp1 = node(nexttemp(), e->s_mode, NULL, NULL);
 		printf("t%d := t%d !=%c t%d\n", 
 				tmp1->s_place, e->s_place, char_type(e->s_place) == 'f'?'f':'i', e->s_place+1);
@@ -314,6 +337,25 @@ void dofor(int m1, struct sem_rec *e2, int m2, struct sem_rec *n1,
 		int m3, struct sem_rec *n2, int m4)
 {
 	fprintf(stderr, "sem: dofor not implemented\n");
+
+	if ( e2  )
+	{
+		backpatch(e2->back.s_true, m3);
+		backpatch(e2->s_false, m4);
+	}
+
+	struct loopjunk * top = &loopscopes[ currloop() ];
+
+	backpatch(top->conts, m2);
+	backpatch(n1, m1);
+	backpatch(n2, m2);
+
+	if ( e2 )
+	{
+		endloopscope(m4);
+	}
+
+
 }
 
 /*
@@ -409,7 +451,8 @@ void dowhile(int m1, struct sem_rec *e, int m2, struct sem_rec *n,
  */
 void endloopscope(int m)
 {
-	fprintf(stderr, "sem: endloopscope not implemented\n");
+	//fprintf(stderr, "sem: endloopscope not implemented\n");
+	decloop();
 }
 
 /*
@@ -515,7 +558,7 @@ struct sem_rec *id(char *x)
 	
 	
 	struct id_entry * p;
-	int type;
+	//int type;
 
 	if ((p = lookup(x, 0)) == NULL) {
 		fprintf(stderr, "Variable %s not found\n", x);
@@ -524,17 +567,17 @@ struct sem_rec *id(char *x)
 		if ( p->i_scope == LOCAL )
 		{
 			printf("t%d := local %d\n", nexttemp(), p->i_offset);
-			type = localtypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT; //p->i_type;//localtypes[p->i_offset];
+	//		type = localtypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT; //p->i_type;//localtypes[p->i_offset];
 		} else if ( p->i_scope == GLOBAL )
 		{
 			printf("t%d := global %s\n", nexttemp(), p->i_name);
 			
 			//fprintf(stderr, "Global %s id type = %c  Raw =%d\n", x, type_code(p-> , p->i_type); 
-			type = int_type( p->i_type);
+	//		type = int_type( p->i_type);
 		} else
 		{
 			printf("t%d := param %d\n", nexttemp(), p->i_offset);
-			type = formaltypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT;
+	//		type = formaltypes[p->i_offset] == 'f' ? T_DOUBLE : T_INT;
 			//type = p->i_type;//type = formaltypes[p->i_offset];
 		}
 
@@ -693,7 +736,11 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 	struct sem_rec * tmp;
 
 	tmp = y;
+	char o = *op;
 
+	// its a plain assignment
+	// make sure type are same and setup for printing
+	// skip the fancy junk
 
 	if ( are_diff(x,y) )
 	{
@@ -703,12 +750,58 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 		} else {
 			y = conv_to_float(y);
 		}
-
-			//x = conv_to_float(x);
-			//y = conv_to_float(y);
 	}
 
-	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), y->s_place);
+
+
+	if (  o == '\0' )
+	{
+		// strip off the addr mode
+		tmp = y;
+		tmp ->s_mode = x->s_mode & ~T_ADDR;
+	} else
+		// else its not a vanilla assignment
+		// its an oper assign so we need to check types
+	{
+
+
+		// if its a binary op assignment
+		// conv to ints
+		if ( o == '|' || o == '&' || o == '^' || o == '<' || o == '>' ) 
+		{
+			// it has to be ints
+			x = conv_to_int(x);
+			y = conv_to_int(y);
+			// setup the bin part
+			opb(op, x, y);
+		}
+
+		/*
+		if ( are_diff(x,y) )
+		{
+			if ( int_type(x->s_mode) == T_INT )
+			{
+				y = conv_to_int(y);
+			} else {
+				y = conv_to_float(y);
+			}
+		}
+		*/
+
+		//fprintf(stderr, "SET: o = %c  op = %s\n", o, op);
+
+
+		// print a deref
+		printf("t%d := @%c t%d\n", nexttemp(), char_type(x->s_mode), x->s_place); 
+
+		// print the op
+		printf("t%d := t%d %s%c t%d\n",
+				nexttemp(),currtemp(), op, char_type(x->s_mode), y->s_place);
+		tmp ->s_place = currtemp();
+	}
+
+	printf("t%d := t%d =%c t%d\n", nexttemp(), x->s_place, char_type(x->s_mode), tmp->s_place);
+
 
 	return node(currtemp(), tmp->s_mode, tmp->back.s_link, tmp->s_false);
 
@@ -719,7 +812,20 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
  */
 void startloopscope()
 {
-	fprintf(stderr, "sem: startloopscope not implemented\n");
+	//fprintf(stderr, "sem: startloopscope not implemented\n");
+
+	int scope = incloop();
+	if ( scope > MAXLOOPSIZE )
+	{
+		fprintf(stderr, "AHH loop size of %d is bigger than max of %d BAILING.\n",
+				scope, MAXLOOPSIZE);
+
+		exit(1);
+	}
+
+	struct loopjunk * top = &loopscopes[ currloop() ];
+	top -> breaks = NULL;
+	top -> conts = NULL;
 }
 
 /*
@@ -728,7 +834,7 @@ void startloopscope()
 struct sem_rec *string(char *s)
 {
 	//fprintf(stderr, "sem: string not implemented\n");
-	
+
 	printf("t%d := %s\n", nexttemp(), s);
 	return node(currtemp(), T_STR, NULL, NULL);
 
