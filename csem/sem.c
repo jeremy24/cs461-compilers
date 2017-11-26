@@ -316,7 +316,11 @@ struct sem_rec *con(char *x)
  */
 void dobreak()
 {
-	fprintf(stderr, "sem: dobreak not implemented\n");
+	//fprintf(stderr, "sem: dobreak not implemented\n");
+
+	// generate the junk to do a jump
+	struct sem_rec * tmp = n();
+	loopcurr->breaks = merge(loopcurr->breaks, tmp);
 }
 
 /*
@@ -350,7 +354,7 @@ void dodo(int m1, int m2, struct sem_rec *e, int m3)
 void dofor(int m1, struct sem_rec *e2, int m2, struct sem_rec *n1,
 		int m3, struct sem_rec *n2, int m4)
 {
-	fprintf(stderr, "sem: dofor not implemented\n");
+	//fprintf(stderr, "sem: dofor not implemented\n");
 
 	if ( e2  )
 	{
