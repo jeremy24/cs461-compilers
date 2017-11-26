@@ -328,7 +328,9 @@ void dobreak()
  */
 void docontinue()
 {
-	fprintf(stderr, "sem: docontinue not implemented\n");
+	//fprintf(stderr, "sem: docontinue not implemented\n");
+	struct sem_rec * tmp = n();
+	loopcurr->conts = merge(loopcurr->conts, tmp);
 }
 
 /*
