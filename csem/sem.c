@@ -21,7 +21,7 @@ extern char localtypes[MAXLOCS];
 extern struct sem_rec ** top;
 
 int functype;
-
+int relexpr = 0;
 
 
 void skip();
@@ -204,8 +204,10 @@ struct sem_rec *call(char *f, struct sem_rec *args)
  */
 struct sem_rec *ccand(struct sem_rec *e1, int m, struct sem_rec *e2)
 {
-	fprintf(stderr, "sem: ccand not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: ccand not implemented\n");
+	backpatch(e1->back.s_true, m);
+	
+	return node(0, 0, e2->back.s_true, merge(e1->s_false, e2->s_false));
 }
 
 /*
@@ -213,24 +215,29 @@ struct sem_rec *ccand(struct sem_rec *e1, int m, struct sem_rec *e2)
  */
 struct sem_rec *ccexpr(struct sem_rec *e)
 {
-	struct sem_rec * tmp1;
+	struct sem_rec * tmp1 = e;
 
-	/*
+
 	if ( !relexpr )
 	{
-		rmp1 = e;
-		relexpr = 0;
+		struct sem_rec * contmp = con("0");
+		tmp1 = node(nexttemp(), e->s_mode, NULL, NULL);
+		printf("t%d := t%d !=%c t%d\n", 
+				tmp1->s_place, e->s_place, char_type(e->s_place), e->s_place+1);
 	}
+	//else
 	
-	*/
+		printf("bt t%d B%d\n", tmp1->s_place, nextbr());
+		printf("br B%d\n", nextbr());
+	//}
 	
-	printf("bt t%d B%d\n", e->s_place, nextbr());
-	printf("br B%d\n", nextbr());
+	tmp1->s_place = currbr() - 1;
+	e->s_place = currbr();
 
 	//fprintf(stderr, "sem: ccexpr not implemented\n");
 	
 	
-	return node(0,0,NULL, NULL); //((struct sem_rec *) NULL);
+	return node(0,0,tmp1, e); //((struct sem_rec *) NULL);
 }
 
 /*
@@ -238,8 +245,8 @@ struct sem_rec *ccexpr(struct sem_rec *e)
  */
 struct sem_rec *ccnot(struct sem_rec *e)
 {
-	fprintf(stderr, "sem: ccnot not implemented\n");
-	return ((struct sem_rec *) NULL);
+	//fprintf(stderr, "sem: ccnot not implemented\n");
+	return node(0, 0, NULL, e->back.s_true);
 }
 
 /*
@@ -250,13 +257,7 @@ struct sem_rec *ccor(struct sem_rec *e1, int m, struct sem_rec *e2)
 	backpatch(e1->s_false, m);
 
 	//fprintf(stderr, "sem: ccor not implemented\n");
-/*
-	fprintf(stderr, "m: %d e1 type: %c  e2 type: %c\n",
-			m, char_type(e1->s_mode), char_type(e2->s_mode));
-	fprintf(stderr, "e1 place: %d  e2 place: %d\n", e1->s_place, e2->s_place);
 
-	printf("B%d=L%d\n", e2->s_place-1, m);
-*/
 	return node(0, 0, merge(e1->back.s_true, e2->back.s_true), e2->s_false);
 }
 
@@ -610,7 +611,7 @@ struct sem_rec *op1(char *op, struct sem_rec *y)
 
 	printf("t%d := %s%c t%d\n", nexttemp(), op, char_type(y->s_mode) , y->s_place);
 
-	return node(currtemp(), y->s_mode, NULL, NULL);
+	return node(currtemp(), y->s_mode & ~T_ADDR, NULL, NULL);
 }
 
 /*
@@ -655,6 +656,8 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 	//fprintf(stderr, "sem: rel not implemented\n");
 
 	int diff = are_diff(x, y); //x->s_mode & y->s_mode != x->s_mode;
+
+	//relexpr = 1;
 
 	if ( diff )
 	{
