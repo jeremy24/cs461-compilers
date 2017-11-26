@@ -1,6 +1,7 @@
 #include <stdio.h>
 # include <stdlib.h>
 # include <assert.h>
+#include <string.h>
 
 # include "cc.h"
 # include "semutil.h"
@@ -38,9 +39,24 @@ int currbr() { return   _currbranch; }
 int nextbr() { return ++_currbranch; }
 
 
+
+#define MAXLABELS 200
+#define MAXLABELNAME 50
+
+
+struct labeljunk {
+	int location;
+	char * id;
+};
+
+
+struct labeljunk labels[MAXLABELS];
+struct labeljunk gotos[MAXLABELS];
+
+int numgotos = 0;
+int currlabelid = 0; 
+
 #define MAXLOOPSIZE 50
-
-
 struct loopjunk {
 	struct sem_rec * breaks;
 	struct sem_rec * conts;
@@ -384,6 +400,23 @@ void dofor(int m1, struct sem_rec *e2, int m2, struct sem_rec *n1,
 void dogoto(char *id)
 {
 	fprintf(stderr, "sem: dogoto not implemented\n");
+
+	for ( int i = 0 ; i < currlabelid ; ++i )
+	{
+		// if we already know where it is,
+		// then jump to that label
+		if ( strcmp(labels[i].id, id) == 0 )
+		{
+			printf("br L%d\n", labels[i].location);
+			return;
+		}
+	}
+
+	// else branch and add the necessary data
+	printf("br B%d\n", nextbr());
+	gotos[numgotos].id = id;
+	gotos[numgotos].location = currbr();
+	numgotos++;
 }
 
 /*
@@ -427,6 +460,13 @@ void doifelse(struct sem_rec *e, int m1, struct sem_rec *n,
  */
 void doret(struct sem_rec *e)
 {
+
+	// we have a return nothing
+	if ( e == NULL )
+	{
+		printf("reti\n");
+		return;
+	}
 
 	int loc = e->s_place;
 
@@ -625,6 +665,33 @@ struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 void labeldcl(char *id)
 {
 	fprintf(stderr, "sem: labeldcl not implemented\n");
+
+	// genny the label
+	dclr(id, T_LBL, 0);
+	if ( currlabel() >= MAXLABELS )
+	{
+		fprintf(stderr, "AHHH we have too many labels! Count = %d. BAILING\n",
+				currlabel());
+		exit(2);
+	}
+
+	labels[ currlabelid ].id = id;
+	
+	// print the genned label
+	printf("label L%d\n", nextlabel());
+
+	// keep track of where it points to
+	labels[ currlabelid ].location = currlabel();
+	currlabelid++;
+
+	for( int i = 0 ; i < numgotos ; ++i )
+	{
+		if ( strcmp(id, gotos[i].id) == 0 )
+		{
+			printf("B%d=L%d\n", gotos[i].location, currlabel());
+			gotos[i].location = 0;
+		}
+	}
 }
 
 /*
