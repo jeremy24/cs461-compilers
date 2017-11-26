@@ -111,6 +111,13 @@ struct sem_rec * conv_to_float( struct sem_rec * x )
  */
 void backpatch(struct sem_rec *p, int k)
 {
+	
+	if ( p == NULL )
+	{
+		fprintf(stderr, "ERROR backpatch: p is NULL on k = %d\n", k);
+		assert(0);
+	}
+
 	//fprintf(stderr, "sem: backpatch not implemented\n");
 	for ( ; p ; p = p->back.s_link )
 	{
@@ -206,8 +213,24 @@ struct sem_rec *ccand(struct sem_rec *e1, int m, struct sem_rec *e2)
  */
 struct sem_rec *ccexpr(struct sem_rec *e)
 {
-	fprintf(stderr, "sem: ccexpr not implemented\n");
-	return ((struct sem_rec *) NULL);
+	struct sem_rec * tmp1;
+
+	/*
+	if ( !relexpr )
+	{
+		rmp1 = e;
+		relexpr = 0;
+	}
+	
+	*/
+	
+	printf("bt t%d B%d\n", e->s_place, nextbr());
+	printf("br B%d\n", nextbr());
+
+	//fprintf(stderr, "sem: ccexpr not implemented\n");
+	
+	
+	return node(0,0,NULL, NULL); //((struct sem_rec *) NULL);
 }
 
 /*
@@ -329,6 +352,10 @@ void doifelse(struct sem_rec *e, int m1, struct sem_rec *n,
 	//printf("B%d=L%d\n", e->s_place, m1);
 	//printf("B%d=L%d\n", e->s_place+1, m2);
 	//printf("B%d=L%d\n", n->s_place, m3);
+
+	backpatch(e->back.s_true, m1);
+	backpatch(e->s_false, m2);
+	backpatch(n, m3);
 
 }
 
@@ -569,7 +596,7 @@ struct sem_rec *n()
 {
 	//fprintf(stderr, "sem: n not implemented\n");
 	printf("br B%d\n", nextbr());
-	return node(currbr(), T_LBL, NULL, NULL);
+	return node(currbr(), 0, NULL, NULL);
 }
 
 /*
@@ -635,13 +662,19 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 		y = conv_to_float(y);
 	}
 
+	int place1, place2;
+
 	printf("t%d := t%d %s%c t%d\n", nexttemp(), x->s_place, op, char_type(x->s_mode), y->s_place);
 	printf("bt t%d B%d\n", currtemp(), nextbr());
+	place1 = currbr();
+
 	printf("br B%d\n", nextbr());
+	place2=currbr();
 
+	x->s_place=place1;
+	y->s_place=place2;
 
-
-	return node(currlabel(), 0, NULL, NULL);
+	return node(currlabel(), 0, x, y);
 }
 
 /*
