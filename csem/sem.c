@@ -223,7 +223,7 @@ struct sem_rec *ccexpr(struct sem_rec *e)
 		struct sem_rec * contmp = con("0");
 		tmp1 = node(nexttemp(), e->s_mode, NULL, NULL);
 		printf("t%d := t%d !=%c t%d\n", 
-				tmp1->s_place, e->s_place, char_type(e->s_place), e->s_place+1);
+				tmp1->s_place, e->s_place, char_type(e->s_place) == 'f'?'f':'i', e->s_place+1);
 	}
 	//else
 	
