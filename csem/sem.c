@@ -552,24 +552,7 @@ void ftail()
  * id - variable reference
  */
 struct sem_rec *id(char *x)
-{
-	/*
-	struct id_entry * p;
-	if ((p = lookup(x, 0)) == NULL ){
-		p = install(x, 0);
-	}
-	else
-	{
-		if ( p->i_scope == GLOBAL ) {}
-		else if ( p->i_scope == LOCAL )
-		{
-			printf("t%d := local %d\n", nexttemp(), p->i_offset);
-		}
-	}
-	
-	*/
-	
-	
+{	
 	struct id_entry * p;
 	//int type;
 
@@ -603,18 +586,12 @@ struct sem_rec *id(char *x)
 
 
 
-
-
 /*
  * indx - subscript
  */
 struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 {
-	//fprintf(stderr, "sem: indx not implemented\n");
-	fprintf(stderr, "INDX: %d  %d\n", x->s_place, i->s_place);	
-	
-	//printf("%c %c\n", x->s_mode==T_INT?'i':'f', i->s_mode==T_INT?'i':'f'); 
-	
+	//fprintf(stderr, "sem: indx not implemented\n");	
 
 	printf("t%d := t%d []%c t%d\n", 
 			nexttemp(), x->s_place, char_type(x->s_mode), i->s_place);
@@ -661,9 +638,7 @@ struct sem_rec *n()
  */
 struct sem_rec *op1(char *op, struct sem_rec *y)
 {
-
 	//fprintf(stderr, "sem: op1 not implemented\n");
-	//fprintf(stderr, "op1: %s  place: %d\n", op, y->s_place);	
 
 	printf("t%d := %s%c t%d\n", nexttemp(), op, char_type(y->s_mode) , y->s_place);
 
@@ -711,11 +686,7 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: rel not implemented\n");
 
-	int diff = are_diff(x, y); //x->s_mode & y->s_mode != x->s_mode;
-
-	//relexpr = 1;
-
-	if ( diff )
+	if ( are_diff(x, y) )
 	{
 		x = conv_to_float(x);
 		y = conv_to_float(y);
@@ -742,20 +713,19 @@ struct sem_rec *rel(char *op, struct sem_rec *x, struct sem_rec *y)
 struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 {
 	//fprintf(stderr, "sem: set not implemented\n");
-	
-	//char type = x->s_mode==T_INT?'i':'f';
-	//char type1 = y->s_mode==T_INT?'i':'f';
-	
+		
 	struct sem_rec * tmp;
 
 	tmp = y;
 	char o = *op;
 
-	// its a plain assignment
-	// make sure type are same and setup for printing
-	// skip the fancy junk
+	int arith_op = o == '+' || o == '-' || o == '*' || o == '/' || o == '%';
 
-	if ( are_diff(x,y) )
+	// if its a simple assign or an arithmatic operation make
+	// sure that the types are the same
+	// if its a binary op it will be forced to int
+	// as necessary below
+	if ( are_diff(x,y) && op == ( '\0' || arith_op) )
 	{
 		if ( int_type(x->s_mode) == T_INT )
 		{
@@ -765,8 +735,9 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 		}
 	}
 
-
-
+	// its a plain assignment
+	// make sure type are same and setup for printing
+	// skip the fancy junk
 	if (  o == '\0' )
 	{
 		// strip off the addr mode
@@ -779,7 +750,8 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 
 
 		// if its a binary op assignment
-		// conv to ints
+		// conv to ints as per writeup
+		// otherwise conversion is already handled above
 		if ( o == '|' || o == '&' || o == '^' || o == '<' || o == '>' ) 
 		{
 			// it has to be ints
@@ -788,20 +760,6 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 			// setup the bin part
 			opb(op, x, y);
 		}
-
-		/*
-		if ( are_diff(x,y) )
-		{
-			if ( int_type(x->s_mode) == T_INT )
-			{
-				y = conv_to_int(y);
-			} else {
-				y = conv_to_float(y);
-			}
-		}
-		*/
-
-		//fprintf(stderr, "SET: o = %c  op = %s\n", o, op);
 
 
 		// print a deref
