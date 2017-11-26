@@ -49,11 +49,13 @@ struct loopjunk {
 // make a thing so hold all the nonsense from loops
 struct loopjunk loopscopes[MAXLOOPSIZE];
 
-int _looptop = 0;
+int _loop = 0;
 
-int incloop()  { return ++_looptop; }
-int decloop()  { return --_looptop; }
-int currloop() { return   _looptop; } 
+struct loopjunk * loopcurr;
+
+int incloop()  { return ++_loop; }
+int decloop()  { return --_loop; }
+int currloop() { return   _loop; } 
 
 /*
 struct sem_rec * cast( struct sem_rec * p, int type)
@@ -195,9 +197,12 @@ struct sem_rec *call(char *f, struct sem_rec *args)
 	int i = 0;
 
 	struct sem_rec * prev;
-	args ->s_false = NULL;
+	
+	if ( args != NULL ) args ->s_false = NULL;
 
-	while ( 1 )
+	int have_args = args != NULL;
+
+	while ( 1 && have_args )
 	{
 		//printf("argi t%d\n", args->s_place);
 		prev = args;
@@ -206,7 +211,7 @@ struct sem_rec *call(char *f, struct sem_rec *args)
 		args ->s_false = prev;
 	}
 
-	while ( 1 )
+	while ( 1 && have_args )
 	{
 		++i;
 		printf("arg%c t%d\n", int_type(args->s_mode) == T_DOUBLE ? 'f' : 'i', args->s_place);
@@ -327,7 +332,16 @@ void docontinue()
  */
 void dodo(int m1, int m2, struct sem_rec *e, int m3)
 {
-	fprintf(stderr, "sem: dodo not implemented\n");
+	//fprintf(stderr, "sem: dodo not implemented\n");
+
+	backpatch(e->back.s_true, m1);
+	backpatch(e->s_false, m3);
+
+	//struct loopjunk * top = &loopscopes[ currloop() ] + looptop ;
+	
+	backpatch(loopcurr->conts, m2);
+
+	endloopscope(m3);
 }
 
 /*
@@ -344,9 +358,9 @@ void dofor(int m1, struct sem_rec *e2, int m2, struct sem_rec *n1,
 		backpatch(e2->s_false, m4);
 	}
 
-	struct loopjunk * top = &loopscopes[ currloop() ];
+	//struct loopjunk * top = &loopscopes[ currloop() ];
 
-	backpatch(top->conts, m2);
+	backpatch(loopcurr->conts, m2);
 	backpatch(n1, m1);
 	backpatch(n2, m2);
 
@@ -448,9 +462,9 @@ void dowhile(int m1, struct sem_rec *e, int m2, struct sem_rec *n,
 	backpatch(e->s_false, m3);
 	backpatch(n, m1);
 
-	struct loopjunk * top = &loopscopes[ currloop() ];
+	//struct loopjunk * top = &loopscopes[ currloop() ];
 
-	backpatch(top->conts, m1);
+	backpatch(loopcurr->conts, m1);
 	endloopscope(m3);
 }
 
@@ -465,6 +479,7 @@ void endloopscope(int m)
 
 	backpatch(top->breaks, m);
 
+	loopcurr--;
 	decloop();
 }
 
@@ -579,8 +594,6 @@ struct sem_rec *id(char *x)
 
 	}
 
-	//fprintf(stderr, "Made Rec: place = %d\n", rec -> s_place);
-
 	return node(currtemp(), p->i_type | T_ADDR, NULL, NULL);// node(currtemp(), p->i_type, NULL, NULL);
 }
 
@@ -598,8 +611,6 @@ struct sem_rec *indx(struct sem_rec *x, struct sem_rec *i)
 
 
 	return node(currtemp(), int_type(x->s_mode)&~T_ARRAY, NULL, NULL);
-
-	//return ((struct sem_rec *) NULL);
 }
 
 /*
@@ -725,7 +736,7 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 	// sure that the types are the same
 	// if its a binary op it will be forced to int
 	// as necessary below
-	if ( are_diff(x,y) && op == ( '\0' || arith_op) )
+	if ( are_diff(x,y) && ( o == '\0' || arith_op) )
 	{
 		if ( int_type(x->s_mode) == T_INT )
 		{
@@ -761,7 +772,6 @@ struct sem_rec *set(char *op, struct sem_rec *x, struct sem_rec *y)
 			opb(op, x, y);
 		}
 
-
 		// print a deref
 		printf("t%d := @%c t%d\n", nexttemp(), char_type(x->s_mode), x->s_place); 
 
@@ -794,9 +804,11 @@ void startloopscope()
 		exit(1);
 	}
 
-	struct loopjunk * top = &loopscopes[ currloop() ];
-	top -> breaks = NULL;
-	top -> conts = NULL;
+	//looptop = 0;
+
+	loopcurr = &loopscopes[ currloop() ];
+	loopcurr -> breaks = NULL;
+	loopcurr -> conts = NULL;
 }
 
 /*
